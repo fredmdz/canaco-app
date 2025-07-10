@@ -1,0 +1,64 @@
+{
+  "expo": {
+    "name": "MasHuezus",
+    "slug": "masHuezus",
+    "version": "3.6.1",
+    "orientation": "portrait",
+    "icon": "./assets/app/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/app/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#4fb8e5"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mashuezus.app",
+      "buildNumber": "1",
+      "config": {
+        "googleMapsApiKey": "AIzaSyDoTmYY9Xfich8_aztp-OyqcGGWgtmrXE8"
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/app/adaptive-icon.png",
+        "backgroundColor": "#4fb8e5"
+      },
+      "package": "com.mashuezus.app",
+      "versionCode": 15,
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyALly7vAncSIWURHXk5NGMNAFJE0N6yO8M"
+        }
+      }
+    },
+    "web": {
+      "favicon": "./assets/app/favicon.png"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Activar los servicios de ubicación nos permite mostrarle veterinarios y mascotas cerca de su ubicación",
+          "locationAlwaysPermission": "Activar los servicios de ubicación nos permite mostrarle veterinarios y mascotas cerca de su ubicación",
+          "locationWhenInUsePermission": "Activar los servicios de ubicación nos permite mostrarle veterinarios y mascotas cerca de su ubicación"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir acceder a tu galería para subir fotos de tus mascotas o de tu carnet",
+          "cameraPermission": "Permitir acceder a tu cámara para tomar y subir fotos de tus mascotas o de tu carnet"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "a4f09861-7435-40ce-943b-ec66bf8b0614"
+      }
+    }
+  }
+}
