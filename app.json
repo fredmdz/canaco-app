@@ -1,15 +1,15 @@
 {
   "expo": {
-    "name": "MasHuezus",
+    "name": "CANACO SERVYTUR TGZ",
     "slug": "masHuezus",
     "version": "3.6.1",
     "orientation": "portrait",
-    "icon": "./assets/app/icon.png",
+    "icon": "./assets/app/splash.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/app/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#4fb8e5"
+      "backgroundColor": "#314c95"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,7 +25,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/app/adaptive-icon.png",
-        "backgroundColor": "#4fb8e5"
+        "backgroundColor": "#314c95"
       },
       "package": "com.mashuezus.app",
       "versionCode": 15,

@@ -3,19 +3,19 @@ import LeftIcon from "../../components/icons/LeftIcon";
 
 const optionsScreen = {
   OPTIONS_STACK: {
-    headerStyle: { backgroundColor: "#4fb8e5" },
+    headerStyle: { backgroundColor: "#314c95" },
     headerTintColor: "#fff",
     headerRight: RightIcon,
     headerLeft: LeftIcon,
   },
 
   OPTIONS_LOGIN: {
-    headerStyle: { backgroundColor: "#4fb8e5" },
+    headerStyle: { backgroundColor: "#314c95" },
     headerTintColor: "#fff",
   },
 
   OPTIONS_DRAWER: {
-    headerStyle: { backgroundColor: "#4fb8e5" },
+    headerStyle: { backgroundColor: "#314c95" },
     headerTintColor: "#fff",
     drawerActiveTintColor: "#fff",
     drawerLabelStyle: {
@@ -23,7 +23,7 @@ const optionsScreen = {
     },
     drawerActiveBackgroundColor: "#00000030",
     drawerStyle: {
-      backgroundColor: "#4fb8e5",
+      backgroundColor: "#314c95",
       color: "#fff",
       width: 250,
     },

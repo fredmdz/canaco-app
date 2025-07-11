@@ -31,9 +31,9 @@ export default function NavigationDrawer() {
         name={routes.MENU}
         component={Menu}
         options={{
-          title: "Mashuezus",
+          title: "CANACO",
           drawerLabel: () => <ItemMenuText text={"Inicio"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/inicio.png")} />,
+          drawerIcon: () => <ItemMenuLogo img={require("../assets/login/logo1.png")} />,
         }}
       />
       <Drawer.Screen
@@ -165,11 +165,11 @@ const MenuScroll = ({ ...props }) => {
         }}
       >
         <Image
-          source={require("../assets/menu/drawer/logo.png")}
+          source={require("../assets/login/logo1.png")}
           resizeMode="contain"
           style={{
-            width: 120,
-            height: 120,
+            width: 400,
+            height: 150,
           }}
         />
       </View>

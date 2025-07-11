@@ -105,11 +105,13 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     marginTop: 25,
+    paddingHorizontal: 10,  
   },
   forgotText: {
     color: "#314c95",
     fontSize: 16,
     textDecorationLine: "underline",
-    textAlign: "center",
+    textAlign: "center", 
+     width: "100%",
   },
 });
