@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { Button, Card } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,7 +15,7 @@ export default function Login() {
     password: yup.string().required("Este campo es obligatorio"),
   });
 
-  //=========================  Hook form
+  //========================= Hook form
   const hookForm = useForm({
     defaultValues: {
       correo: "",
@@ -31,7 +31,7 @@ export default function Login() {
     const response = await servicesUsers.login(values.correo, values.password);
 
     if (!response) {
-      Alert.alert("", "Error al iniciar sesion");
+      Alert.alert("", "Error al iniciar sesión");
       return;
     }
 
@@ -44,28 +44,35 @@ export default function Login() {
   }
 
   function onError(errors) {
-    Alert.alert("", "Debes de completar los campos requeridos");
+    Alert.alert("", "Debes completar los campos requeridos");
   }
 
   return (
     <Background.Image source={require("../../assets/fondos/city2.png")}>
-      <View>
-        <Image style={styles.logo} source={require("../../assets/login/logo7.png")} />
-        <Card style={{ margin: 10 }}>
-          <Card.Content style={{ gap: 20 }}>
-            <Form.Input hookForm={hookForm} name={"correo"} label={"Correo"} keyboardType={"email-address"} />
+      <View style={styles.container}>
+        <Card style={styles.card}>
+          <Card.Content style={styles.cardContent}>
+            <Form.Input
+              hookForm={hookForm}
+              name={"correo"}
+              label={"Correo"}
+              keyboardType={"email-address"}
+            />
             <Form.Input
               hookForm={hookForm}
               name={"password"}
               label={"Contraseña"}
-              secureTextEntry={hookForm.watch("showPass") ? false : true}
+              secureTextEntry={!hookForm.watch("showPass")}
             />
-            <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+            <View style={styles.togglePass}>
               <Button
                 mode="text"
-                onPress={() => {
-                  hookForm.setValue("showPass", !hookForm.getValues("showPass"));
-                }}
+                onPress={() =>
+                  hookForm.setValue(
+                    "showPass",
+                    !hookForm.getValues("showPass")
+                  )
+                }
               >
                 Ver Contraseña
               </Button>
@@ -73,7 +80,7 @@ export default function Login() {
             <Button
               icon="check"
               mode="contained"
-              buttonColor="#0088cd"
+              buttonColor="#314c95"
               onPress={hookForm.handleSubmit(onSubmit, onError)}
             >
               Entrar
@@ -84,10 +91,24 @@ export default function Login() {
     </Background.Image>
   );
 }
+
 const styles = StyleSheet.create({
-  logo: {
-    marginTop: 30,
-    justifyContent: "center",
-    alignItems: "center",
+  container: {
+    flex: 1,
+    justifyContent: "center", // Centrado vertical
+    alignItems: "center",     // Centrado horizontal
+    padding: 20,
+  },
+  card: {
+    width: "100%",
+    maxWidth: 400,
+    margin: 10,
+  },
+  cardContent: {
+    gap: 20,
+  },
+  togglePass: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
 });

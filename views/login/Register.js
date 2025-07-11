@@ -1,4 +1,4 @@
-import { View, Image, StyleSheet, Alert } from "react-native";
+import { View, StyleSheet, Alert, Text } from "react-native";
 import { Button, Card } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -17,7 +17,7 @@ export default function Register() {
     apellidos: yup.string().required("Este campo es obligatorio"),
   });
 
-  //=========================  Hook form
+  //========================= Hook form
   const hookForm = useForm({
     defaultValues: {
       correo: "",
@@ -52,10 +52,9 @@ export default function Register() {
 
   return (
     <Background.Image source={require("../../assets/fondos/city2.png")}>
-      <View>
-        <Image style={styles.logo} source={require("../../assets/login/logo7.png")} />
-        <Card style={{ margin: 10 }}>
-          <Card.Content style={{ gap: 20 }}>
+      <View style={styles.container}>
+        <Card style={styles.card}>
+          <Card.Content style={styles.cardContent}>
             <Form.Input hookForm={hookForm} name={"correo"} label={"Correo"} keyboardType={"email-address"} />
             <Form.Input hookForm={hookForm} name={"password"} label={"Contraseña"} secureTextEntry={true} />
             <Form.Input hookForm={hookForm} name={"nombre"} label={"Nombre"} />
@@ -64,10 +63,10 @@ export default function Register() {
             <Button
               icon="check"
               mode="contained"
-              buttonColor="#0088cd"
+              buttonColor="#314c95"
               onPress={hookForm.handleSubmit(onSubmit, onError)}
             >
-              Registrarse
+              <Text style={{ color: "white" }}>Registrarse</Text>
             </Button>
           </Card.Content>
         </Card>
@@ -77,9 +76,18 @@ export default function Register() {
 }
 
 const styles = StyleSheet.create({
-  logo: {
-    marginTop: 30,
+  container: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    padding: 20,
+  },
+  card: {
+    width: "100%",
+    maxWidth: 400,
+    margin: 10,
+  },
+  cardContent: {
+    gap: 20,
   },
 });

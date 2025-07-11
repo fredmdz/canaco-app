@@ -46,7 +46,7 @@ export default function ForgotPassword() {
   return (
     <Background.Image source={require("../../assets/fondos/city2.png")}>
       <View>
-        <Image style={styles.logo} source={require("../../assets/login/logo8.png")} />
+        
         <Card style={{ margin: 10 }}>
           <Card.Content style={{ gap: 20 }}>
             <Form.Input hookForm={hookForm} name={"correo"} label={"Correo"} keyboardType={"email-address"} />
@@ -54,7 +54,7 @@ export default function ForgotPassword() {
             <Button
               icon="check"
               mode="contained"
-              buttonColor="#0088cd"
+              buttonColor="#314c95"
               onPress={hookForm.handleSubmit(onSubmit, onError)}
             >
               Recuperar contraseña
