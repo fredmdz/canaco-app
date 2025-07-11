@@ -1,4 +1,14 @@
-import { View, StyleSheet, Alert } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Alert,
+  Text,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 import { Button, Card } from "react-native-paper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -9,13 +19,11 @@ import { Form, Background } from "../../components/ui/";
 import { helpers } from "../../utilities";
 
 export default function Login() {
-  //========================= Schema
   const schema = yup.object().shape({
     correo: yup.string().required("Este campo es obligatorio"),
     password: yup.string().required("Este campo es obligatorio"),
   });
 
-  //========================= Hook form
   const hookForm = useForm({
     defaultValues: {
       correo: "",
@@ -25,7 +33,6 @@ export default function Login() {
     resolver: yupResolver(schema),
   });
 
-  //========================= Submit
   async function onSubmit(dataValues) {
     const values = testValues(dataValues);
     const response = await servicesUsers.login(values.correo, values.password);
@@ -49,55 +56,74 @@ export default function Login() {
 
   return (
     <Background.Image source={require("../../assets/fondos/city2.png")}>
-      <View style={styles.container}>
-        <Card style={styles.card}>
-          <Card.Content style={styles.cardContent}>
-            <Form.Input
-              hookForm={hookForm}
-              name={"correo"}
-              label={"Correo"}
-              keyboardType={"email-address"}
-            />
-            <Form.Input
-              hookForm={hookForm}
-              name={"password"}
-              label={"Contraseña"}
-              secureTextEntry={!hookForm.watch("showPass")}
-            />
-            <View style={styles.togglePass}>
-              <Button
-                mode="text"
-                onPress={() =>
-                  hookForm.setValue(
-                    "showPass",
-                    !hookForm.getValues("showPass")
-                  )
-                }
-              >
-                Ver Contraseña
-              </Button>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.flex}
+        keyboardVerticalOffset={80}
+      >
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            keyboardShouldPersistTaps="handled"
+          >
+            <View style={styles.container}>
+              <Card style={styles.card}>
+                <Card.Content style={styles.cardContent}>
+                  <Form.Input
+                    hookForm={hookForm}
+                    name="correo"
+                    label="Correo"
+                    keyboardType="email-address"
+                  />
+                  <Form.Input
+                    hookForm={hookForm}
+                    name="password"
+                    label="Contraseña"
+                    secureTextEntry={!hookForm.watch("showPass")}
+                  />
+                  <View style={styles.togglePass}>
+                    <Button
+                      mode="text"
+                      onPress={() =>
+                        hookForm.setValue(
+                          "showPass",
+                          !hookForm.getValues("showPass")
+                        )
+                      }
+                    >
+                      Ver Contraseña
+                    </Button>
+                  </View>
+                  <Button
+                    icon="check"
+                    mode="contained"
+                    buttonColor="#314c95"
+                    onPress={hookForm.handleSubmit(onSubmit, onError)}
+                  >
+                    Entrar
+                  </Button>
+                </Card.Content>
+              </Card>
             </View>
-            <Button
-              icon="check"
-              mode="contained"
-              buttonColor="#314c95"
-              onPress={hookForm.handleSubmit(onSubmit, onError)}
-            >
-              Entrar
-            </Button>
-          </Card.Content>
-        </Card>
-      </View>
+          </ScrollView>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
     </Background.Image>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  flex: {
     flex: 1,
-    justifyContent: "center", // Centrado vertical
-    alignItems: "center",     // Centrado horizontal
-    padding: 20,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: "center",
+    paddingHorizontal: 20,
+  },
+  container: {
+    justifyContent: "center",
+    alignItems: "center",
   },
   card: {
     width: "100%",

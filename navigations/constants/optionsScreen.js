@@ -23,7 +23,7 @@ const optionsScreen = {
     },
     drawerActiveBackgroundColor: "#00000030",
     drawerStyle: {
-      backgroundColor: "#314c95",
+      backgroundColor: "#ffffffff",
       color: "#fff",
       width: 250,
     },

@@ -4,16 +4,10 @@ import { Text } from "react-native-paper";
 
 import Menu from "../views/menu/Menu";
 import Redes from "../views/redes/VerRedes";
-import NavigationMisMascotas from "./modules/NavigationMisMascotas";
-import NavigationClubRazas from "./modules/NavigationClubRazas";
-import NavigationCarnets from "./modules/NavigationCarnets";
-import NavigationVeterinarios from "./modules/NavigationVeterinarios";
 import NavigationEventos from "./modules/NavigationEventos";
+import NavigationBeneficios from "./modules/NavigationBeneficios";
+import NavigationCursos from "./modules/NavigationCursos";
 import NavigationContactos from "./modules/NavigationContactos";
-import NavigationPreguntas from "./modules/NavigationPreguntas";
-import NavigationAdopciones from "./modules/NavigationAdopciones";
-import NavigationTaxis from "./modules/NavigationTaxis";
-import NavigationOfertas from "./modules/NavigationOfertas";
 import NavigationOpciones from "./modules/NavigationOpciones";
 import { routes } from "../routes";
 import { optionsScreen } from "./constants/optionsScreen";
@@ -31,48 +25,9 @@ export default function NavigationDrawer() {
         name={routes.MENU}
         component={Menu}
         options={{
-          title: "CANACO",
+          title: "EMPRESAS",
           drawerLabel: () => <ItemMenuText text={"Inicio"} />,
           drawerIcon: () => <ItemMenuLogo img={require("../assets/login/logo1.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.MIS_MASCOTAS}
-        component={NavigationMisMascotas}
-        options={{
-          headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Mis mascotas"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/mascota.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.CLUB_RAZAS}
-        component={NavigationClubRazas}
-        options={{
-          headerShown: false,
-          unmountOnBlur: true,
-          drawerLabel: () => <ItemMenuText text={"Club de razas"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/club.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.CARNETS}
-        component={NavigationCarnets}
-        options={{
-          headerShown: false,
-          unmountOnBlur: true,
-          drawerLabel: () => <ItemMenuText text={"Carnets"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/carnet.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.VETERINARIOS}
-        component={NavigationVeterinarios}
-        options={{
-          headerShown: false,
-          unmountOnBlur: true,
-          drawerLabel: () => <ItemMenuText text={"Veterinarios"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/veterinarios.png")} />,
         }}
       />
       <Drawer.Screen
@@ -85,48 +40,21 @@ export default function NavigationDrawer() {
         }}
       />
       <Drawer.Screen
-        name={routes.DRAWER.CONTACTOS}
-        component={NavigationContactos}
+        name={routes.DRAWER.BENEFICIOS}
+        component={NavigationBeneficios}
         options={{
           headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Contactanos"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/contactanos.png")} />,
+          drawerLabel: () => <ItemMenuText text={"Beneficios"} />,
+          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/beneficios.png")} />,
         }}
       />
       <Drawer.Screen
-        name={routes.DRAWER.PREGUNTAS}
-        component={NavigationPreguntas}
+        name={routes.DRAWER.CURSOS}
+        component={NavigationCursos}
         options={{
           headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Preguntas"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/preguntas.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.ADOPCIONES}
-        component={NavigationAdopciones}
-        options={{
-          headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Adopciones"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/adopciones.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.TAXIS}
-        component={NavigationTaxis}
-        options={{
-          headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Transporte"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/taxi.png")} />,
-        }}
-      />
-      <Drawer.Screen
-        name={routes.DRAWER.OFERTAS}
-        component={NavigationOfertas}
-        options={{
-          headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Ofertas"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/ofertas.png")} />,
+          drawerLabel: () => <ItemMenuText text={"Cursos"} />,
+          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/cursos.png")} />,
         }}
       />
       <Drawer.Screen
@@ -138,7 +66,17 @@ export default function NavigationDrawer() {
           drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/face.png")} />,
         }}
       />
-      <Drawer.Screen
+       <Drawer.Screen
+        name={routes.DRAWER.CONTACTOS}
+        component={NavigationContactos}
+        options={{
+          headerShown: false,
+          drawerLabel: () => <ItemMenuText text={"Contáctanos"} />,
+          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/contactanos.png")} />,
+        }}
+      />
+
+       <Drawer.Screen
         name={routes.DRAWER.OPCIONES}
         component={NavigationOpciones}
         options={{
@@ -153,7 +91,7 @@ export default function NavigationDrawer() {
 
 const MenuScroll = ({ ...props }) => {
   return (
-    <DrawerContentScrollView props>
+    <DrawerContentScrollView {...props}>
       <View
         style={{
           display: "flex",
@@ -174,8 +112,8 @@ const MenuScroll = ({ ...props }) => {
         />
       </View>
       <DrawerItemList {...props} />
-      <Text style={{ color: "#fff", fontSize: 14, paddingTop: 30, paddingBottom: 10, textAlign: "center" }}>
-        {"Mashuezus"}
+      <Text style={{ color: "#314c95", fontSize: 14, paddingTop: 30, paddingBottom: 10, textAlign: "center" }}>
+        {"CANACO SERVYTUR"}
       </Text>
     </DrawerContentScrollView>
   );
@@ -195,5 +133,6 @@ const ItemMenuLogo = ({ img }) => {
 };
 
 const ItemMenuText = ({ text }) => {
-  return <Text style={{ color: "#fff", fontSize: 16, marginLeft: -18 }}>{text}</Text>;
+  return <Text style={{ color: "#314c95", fontSize: 16, marginLeft: -18 }}>{text}</Text>;
 };
+

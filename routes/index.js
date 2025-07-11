@@ -17,6 +17,8 @@ const routes = {
     CARNETS: "drawerCarnets",
     VETERINARIOS: "drawerVeterinarios",
     EVENTOS: "drawerEventos",
+    BENEFICIOS: "drawerBeneficios",
+    CURSOS: "drawerCursos",
     CONTACTOS: "drawerContactos",
     PREGUNTAS: "drawerPreguntas",
     ADOPCIONES: "drawerAdopciones",
@@ -49,6 +51,16 @@ const routes = {
   EVENTOS: {
     LISTA_EVENTOS: "listaEventos",
     VER_EVENTO: "verEvento",
+  },
+
+  BENEFICIOS: {
+  LISTA_BENEFICIOS: "listaBeneficios",
+  VER_BENEFICIO: "verBeneficio",
+  },
+
+  CURSOS: {
+  LISTA_CURSOS: "listaCursos",
+  VER_CURSO: "verCurso",
   },
 
   CONTACTOS: {

@@ -1,73 +1,100 @@
-import { StyleSheet, View, Dimensions } from "react-native";
-
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { View as ViewUi, Background } from "../../components/ui";
-import CarouselImages from "./components/CarouselImages";
 import Card from "./components/Card";
-import { routes } from "../../routes";
 
 export default function Menu() {
-  // Saca las dimensiones de la imagen
-  const width = Dimensions.get("window").width;
-  let heightImage = 210;
-  if (width >= 600) {
-    heightImage = 300;
-  } else if (width >= 1400) {
-    heightImage = 400;
-  } else if (width >= 1600) {
-    heightImage = 500;
-  } else if (width >= 2000) {
-    heightImage = 600;
-  }
+  const empresas = [
+    {
+      title: "TEC SA de CV",
+      description: "Soluciones confiables para tu negocio.",
+      image: require("../../assets/menu/empresa1.jpg"),
+    },
+    {
+      title: "Laboratorio ROVISAN",
+      description: "Análisis clínicos con descuento.",
+      image: require("../../assets/menu/empresa2.jpg"),
+    },
+    {
+      title: "Passionaria Floreria's",
+      description: "Passionaria Floreria's.",
+      image: require("../../assets/menu/empresa3.jpg"),
+    },
+    {
+      title: "Mezcal Mononegro ",
+      description: "Mezcal Mononegro.",
+      image: require("../../assets/menu/empresa4.jpg"),
+    },
+    {
+      title: "Maxifarmacias",
+      description: " ¡Especialidad a tu alcance!.",
+      image: require("../../assets/menu/empresa5.jpg"),
+    },
+    {
+      title: "J.A. Gordillo",
+      description: "Sector Asegurador y Afianzador.",
+      image: require("../../assets/menu/empresa6.jpg"),
+    },
+  ];
 
   return (
-    <Background.Image source={require("../../assets/fondos/menu3.png")}>
       <ViewUi.Scroll.ParentFull>
-        <View style={styles.parentContainer}>
-          <Card
-            to={routes.DRAWER.MIS_MASCOTAS}
-            image={require("../../assets/menu/mascota.png")}
-            heightImage={heightImage}
-          />
-          <Card to={routes.DRAWER.CLUB_RAZAS} image={require("../../assets/menu/club.png")} heightImage={heightImage} />
-          <Card to={routes.DRAWER.CARNETS} image={require("../../assets/menu/carnet.png")} heightImage={heightImage} />
-          <Card
-            to={routes.DRAWER.VETERINARIOS}
-            image={require("../../assets/menu/veterinarios.png")}
-            heightImage={heightImage}
-          />
-          <Card to={routes.DRAWER.EVENTOS} image={require("../../assets/menu/eventos.png")} heightImage={heightImage} />
-          <Card
-            to={routes.DRAWER.CONTACTOS}
-            image={require("../../assets/menu/contactanos.png")}
-            heightImage={heightImage}
-          />
-          <Card
-            to={routes.DRAWER.PREGUNTAS}
-            image={require("../../assets/menu/preguntas.png")}
-            heightImage={heightImage}
-          />
-          <Card
-            to={routes.DRAWER.ADOPCIONES}
-            image={require("../../assets/menu/adopciones.png")}
-            heightImage={heightImage}
-          />
-          <Card to={routes.DRAWER.TAXIS} image={require("../../assets/menu/taxi.png")} heightImage={heightImage} />
-          <Card to={routes.DRAWER.OFERTAS} image={require("../../assets/menu/ofertas.png")} heightImage={heightImage} />
-        </View>
-        <View style={{ backgroundColor: "#777" }}>
-          <CarouselImages width={width} />
+        <View style={styles.container}>
+          {empresas.map((empresa, index) => (
+            <View key={index} style={styles.card}>
+              <Card image={empresa.image} heightImage={100} />
+              <Text style={styles.title}>{empresa.title}</Text>
+              <Text style={styles.description}>{empresa.description}</Text>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Ver más</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
         </View>
       </ViewUi.Scroll.ParentFull>
-    </Background.Image>
   );
 }
-
 const styles = StyleSheet.create({
-  parentContainer: {
-    display: "flex",
+  container: {
     flexDirection: "row",
     flexWrap: "wrap",
-    marginBottom: 20,
-    marginTop: 20,
+    justifyContent: "space-between",
+    padding: 20,
+    gap: 16,
+  },
+  card: {
+    width: "47%",
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
+    paddingBottom: 16,
+    alignItems: "center",
+  },
+  title: {
+    marginTop: 10,
+    fontSize: 15,
+    fontWeight: "600",
+    textAlign: "center",
+    color: "#2c3e50",
+  },
+  description: {
+    fontSize: 13,
+    textAlign: "center",
+    paddingHorizontal: 10,
+    color: "#606060",
+    marginTop: 6,
+  },
+  button: {
+    marginTop: 12,
+    backgroundColor: "#1a237e",
+    paddingVertical: 8,
+    paddingHorizontal: 24,
+    borderRadius: 6,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 13,
+    fontWeight: "500",
+    letterSpacing: 0.3,
   },
 });

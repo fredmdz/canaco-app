@@ -4,12 +4,12 @@
     "slug": "masHuezus",
     "version": "3.6.1",
     "orientation": "portrait",
-    "icon": "./assets/app/splash.png",
+    "icon": "./assets/login/logo1.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/app/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#314c95"
+      "backgroundColor": "#Ffffff"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -25,7 +25,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/app/adaptive-icon.png",
-        "backgroundColor": "#314c95"
+        "backgroundColor": "#Ffffff"
       },
       "package": "com.mashuezus.app",
       "versionCode": 15,
