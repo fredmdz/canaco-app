@@ -77,7 +77,7 @@ export default function ListaBeneficios({ navigation }) {
     <Background.Image source={require("../../assets/fondos/menu.png")}>
       <ViewUi.Child>
         <Searchbar
-          placeholder="Busca beneficios o ciudad de interés"
+          placeholder="Busca beneficios de interés"
           onChangeText={(text) => searchText(text)}
           value={search}
           style={styles.searchbar}

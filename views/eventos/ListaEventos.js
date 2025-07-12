@@ -77,7 +77,7 @@ export default function ListaEventos({ navigation }) {
     <Background.Image source={require("../../assets/fondos/menu.png")}>
       <ViewUi.Child>
         <Searchbar
-          placeholder="Busca evento o ciudad de interés"
+          placeholder="Busca un evento de interés"
           onChangeText={(text) => searchText(text)}
           value={search}
           style={styles.searchbar}

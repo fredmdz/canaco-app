@@ -39,7 +39,7 @@ export default function Register() {
       return;
     }
 
-    Alert.alert("", "¡Bienvenido a MasHuezus!");
+    Alert.alert("", "¡Bienvenido a CANACO SERVYTUR!");
   }
 
   function testValues(dataValues) {

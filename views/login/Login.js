@@ -42,7 +42,7 @@ export default function Login() {
       return;
     }
 
-    Alert.alert("", "¡Bienvenido!");
+    Alert.alert("", "¡Bienvenido A CANACO SERVYTUR!");
   }
 
   function testValues(dataValues) {

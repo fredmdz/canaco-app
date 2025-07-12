@@ -77,7 +77,7 @@ export default function ListaCursos({ navigation }) {
     <Background.Image source={require("../../assets/fondos/menu.png")}>
       <ViewUi.Child>
         <Searchbar
-          placeholder="Busca Cursos o ciudad de interés"
+          placeholder="Busca cursos de interés"
           onChangeText={(text) => searchText(text)}
           value={search}
           style={styles.searchbar}
@@ -87,7 +87,7 @@ export default function ListaCursos({ navigation }) {
 
       {!listCursos.length ? (
         <ViewUi.Child>
-          <ListUi.Empty text={"Lo lamentamos, por el momento no hay benefiicios"} />
+          <ListUi.Empty text={"Lo lamentamos, por el momento no hay cursos"} />
         </ViewUi.Child>
       ) : (
         <FlatList
