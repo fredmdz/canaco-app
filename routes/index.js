@@ -11,41 +11,12 @@ const routes = {
 
   DRAWER: {
     OPCIONES: "drawerOpciones",
-
-    MIS_MASCOTAS: "drawerMisMascotas",
-    CLUB_RAZAS: "drawerClubRazas",
-    CARNETS: "drawerCarnets",
-    VETERINARIOS: "drawerVeterinarios",
     EVENTOS: "drawerEventos",
     BENEFICIOS: "drawerBeneficios",
     CURSOS: "drawerCursos",
     CONTACTOS: "drawerContactos",
     PREGUNTAS: "drawerPreguntas",
-    ADOPCIONES: "drawerAdopciones",
-    TAXIS: "drawerTaxis",
     OFERTAS: "dreawerOfertas",
-  },
-
-  MIS_MASCOTAS: {
-    LISTA_MASCOTAS: "listaMascotas",
-    AGREGAR_MASCOTA: "agregarMascota",
-  },
-
-  CLUB_RAZAS: {
-    LISTA_MASCOTAS: "listaMascotasClubRazas",
-    VER_MASCOTA: "verMascotaClubRazas",
-  },
-
-  CARNETS: {
-    LISTA_MASCOTAS: "listaMascotasCarnet",
-    AGREGAR_MASCOTA: "agregarMascotaCarnet",
-    LISTA_CARNETS: "listaCarnets",
-    AGREGAR_CARNET: "agregarCarnet",
-  },
-
-  VETERINARIOS: {
-    LISTA_VETERINARIOS: "listaVeterinarios",
-    VER_VETERINARIO: "verVeterinario",
   },
 
   EVENTOS: {
@@ -72,16 +43,6 @@ const routes = {
   PREGUNTAS: {
     LISTA_PREGUNTAS: "listaPreguntas",
     VER_PREGUNTA: "verPregunta",
-  },
-
-  ADOPCIONES: {
-    LISTA_ADOPCIONES: "listaAdopciones",
-    VER_ADOPCION: "verAdopcion",
-  },
-
-  TAXIS: {
-    LISTA_TAXIS: "listaTaxis",
-    VER_TAXI: "verTaxi",
   },
 
   OFERTAS: {

@@ -25,8 +25,8 @@ export default function NavigationDrawer() {
         name={routes.MENU}
         component={Menu}
         options={{
-          title: "EMPRESAS",
-          drawerLabel: () => <ItemMenuText text={"Inicio"} />,
+          title: "Empresas",
+          drawerLabel: () => <ItemMenuText text={"Empresas"} />,
           drawerIcon: () => <ItemMenuLogo img={require("../assets/login/logo1.png")} />,
         }}
       />
@@ -81,7 +81,7 @@ export default function NavigationDrawer() {
         component={NavigationOpciones}
         options={{
           headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Opciones de la app"} />,
+          drawerLabel: () => <ItemMenuText text={"Opciones"} />,
           drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/opciones.png")} />,
         }}
       />

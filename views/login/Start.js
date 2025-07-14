@@ -21,7 +21,7 @@ export default function Start({ navigation }) {
     >
       <View style={styles.container}>
         <View style={styles.innerContainer}>
-          {/* Logo centrado arriba */}
+
           <Image
             source={require("../../assets/login/logo1.png")}
             style={styles.logo}

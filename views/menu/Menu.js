@@ -81,9 +81,8 @@ export default function Menu({ navigation }) {
   );
 }
 
-// Estilos (agregar estos nuevos)
+
 const styles = StyleSheet.create({
-  // ... (mantener los existentes)
   emptyContainer: {
     flex: 1,
     justifyContent: 'center',

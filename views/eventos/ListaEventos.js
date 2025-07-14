@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, Pressable, Image, Linking, View } from "react-nat
 import { List, Searchbar } from "react-native-paper";
 
 import { servicesFirebase } from "../../services/servicesFirebase";
-import { PreLoader, Background, View as ViewUi, List as ListUi } from "../../components/ui";
+import { PreLoader, View as ViewUi, List as ListUi } from "../../components/ui";
 import { helpers } from "../../utilities/helpers";
 import { routes } from "../../routes";
 
@@ -32,7 +32,7 @@ export default function ListaEventos({ navigation }) {
     const searchNew = helpers.removeAccents(searchInput).trim().toLowerCase();
     if (searchNew.length >= 1) {
       filter(searchNew);
-    } else if (searchNew.length == 0) {
+    } else if (searchNew.length === 0) {
       resetSearch();
     }
   }
@@ -74,7 +74,7 @@ export default function ListaEventos({ navigation }) {
   }
 
   return (
-    <Background.Image source={require("../../assets/fondos/menu.png")}>
+    <View style={{ flex: 1 }}>
       <ViewUi.Child>
         <Searchbar
           placeholder="Busca un evento de interés"
@@ -96,15 +96,15 @@ export default function ListaEventos({ navigation }) {
           contentContainerStyle={styles.contentContainerStyle}
         />
       )}
+
       <Pressable
         onPress={() => {
           Linking.openURL("https://mashuezus.com/apppreguntas/eventos");
         }}
         style={styles.banner}
       >
-        <Image source={require("../../assets/banners/banner-eventos.gif")} style={styles.bannerImage} />
       </Pressable>
-    </Background.Image>
+    </View>
   );
 }
 
