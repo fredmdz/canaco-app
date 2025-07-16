@@ -27,7 +27,7 @@ export default function NavigationDrawer() {
         options={{
           title: "Empresas",
           drawerLabel: () => <ItemMenuText text={"Empresas"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/login/logo1.png")} />,
+          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/empresas.png")} />,
         }}
       />
       <Drawer.Screen
@@ -63,7 +63,7 @@ export default function NavigationDrawer() {
         options={{
           title: "Redes sociales",
           drawerLabel: () => <ItemMenuText text={"Redes sociales"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/face.png")} />,
+          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/redes.png")} />,
         }}
       />
        <Drawer.Screen

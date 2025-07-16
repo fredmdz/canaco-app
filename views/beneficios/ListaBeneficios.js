@@ -102,7 +102,6 @@ export default function ListaBeneficios({ navigation }) {
         }}
         style={styles.banner}
       >
-        {/* Aquí puedes poner un banner si quieres */}
       </Pressable>
     </View>
   );

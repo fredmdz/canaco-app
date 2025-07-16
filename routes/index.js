@@ -35,14 +35,9 @@ const routes = {
   },
 
   CONTACTOS: {
-    LISTA_PREGUNTAS: "listaPreguntasContactos",
-    VER_PREGUNTA: "verPreguntaContacto",
+    LISTA_CONTACTOS: "listaContactos",
+    VER_CONTACTO: "verContacto",
     VER_FORMULARIO: "verFormulario",
-  },
-
-  PREGUNTAS: {
-    LISTA_PREGUNTAS: "listaPreguntas",
-    VER_PREGUNTA: "verPregunta",
   },
 
   OFERTAS: {
