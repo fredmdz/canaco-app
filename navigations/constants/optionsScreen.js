@@ -1,11 +1,12 @@
-import RightIcon from "../../components/icons/RightIcon";
+// navigation/constants/optionsScreen.js
+
 import LeftIcon from "../../components/icons/LeftIcon";
 
 const optionsScreen = {
   OPTIONS_STACK: {
     headerStyle: { backgroundColor: "#314c95" },
     headerTintColor: "#fff",
-    headerRight: RightIcon,
+  
     headerLeft: LeftIcon,
   },
 
@@ -17,9 +18,9 @@ const optionsScreen = {
   OPTIONS_DRAWER: {
     headerStyle: { backgroundColor: "#314c95" },
     headerTintColor: "#fff",
-    drawerActiveTintColor: "#fff",
+    drawerActiveTintColor: "#314c95", // <-- ¡CAMBIO CLAVE AQUÍ!
     drawerLabelStyle: {
-      color: "#fff",
+      color: "#fff", // Color del texto del label inactivo (por defecto, sigue siendo blanco)
     },
     drawerActiveBackgroundColor: "#00000030",
     drawerStyle: {

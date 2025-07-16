@@ -14,28 +14,29 @@ function VerContacto({ route }) {
   }, [dataContacto]);
 
   return (
-      <ViewUi.Scroll.Parent>
+    <ViewUi.Scroll.Parent>
 
-        {/* Header personalizado con logo y título */}
-        <View style={{ alignItems: "center", marginTop: 20 }}>
-          <Text style={{ fontSize: 24, fontWeight: "bold", color: "#314c95", marginBottom: 5 }}>
-            {contacto.nombre || "Contacto"}
-          </Text>
-          <Image
-            source={require("../../assets/login/logo1.png")}
-            style={{ width: 350, height: 200, resizeMode: "contain" }}
-          />
-        </View>
+      {/* Header personalizado con logo y título */}
+      <View style={{ alignItems: "center", marginTop: 20 }}>
+        <Text style={{ fontSize: 24, fontWeight: "bold", color: "#314c95", marginBottom: 5 }}>
+          {contacto.nombre || "Contacto"}
+        </Text>
+        <Image
+          // *** CAMBIO AQUÍ: Usar contacto.imagen ***
+          source={contacto.imagen ? { uri: contacto.imagen } : require("../../assets/login/logo1.png")}
+          style={{ width: 350, height: 200, resizeMode: "contain" }}
+        />
+      </View>
 
-        <ViewUi.Child>
-          <ListUi.Parent>
-            <ListUi.Item icon={"phone"} color={"blue"} title={"Teléfono"} subtitle={contacto.telefono || "-"} />
-            <ListUi.Item icon={"email"} color={"green"} title={"Correo"} subtitle={contacto.correo || "-"} />
-            <ListUi.Item icon={"map-marker"} color={"orange"} title={"Dirección"} subtitle={contacto.direccion || "-"} />
-          </ListUi.Parent>
-        </ViewUi.Child>
+      <ViewUi.Child>
+        <ListUi.Parent>
+          <ListUi.Item icon={"phone"} color={"blue"} title={"Teléfono"} subtitle={contacto.telefono || "-"} />
+          <ListUi.Item icon={"email"} color={"green"} title={"Correo"} subtitle={contacto.correo || "-"} />
+          <ListUi.Item icon={"map-marker"} color={"orange"} title={"Dirección"} subtitle={contacto.direccion || "-"} />
+        </ListUi.Parent>
+      </ViewUi.Child>
 
-      </ViewUi.Scroll.Parent>
+    </ViewUi.Scroll.Parent>
   );
 }
 

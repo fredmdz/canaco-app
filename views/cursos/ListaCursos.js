@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Pressable, Image, Linking, View } from "react-native";
+import { StyleSheet, FlatList, Pressable, Image, Linking, View, Text } from "react-native";
 import { List, Searchbar } from "react-native-paper";
 
 import { servicesFirebase } from "../../services/servicesFirebase";
 import { PreLoader, View as ViewUi, List as ListUi } from "../../components/ui";
 import { helpers } from "../../utilities/helpers";
-import { routes } from "../../routes";
+import { routes } from "../../routes"; // Asegúrate de que esta importación sea correcta
 
 export default function ListaCursos({ navigation }) {
   const [listCursos, setListCursos] = useState([]);
@@ -18,8 +18,8 @@ export default function ListaCursos({ navigation }) {
   }, []);
 
   async function getAll() {
-    const items = await servicesFirebase.getAll("Cursos");
-    const itemsNew = items.filter((data) => helpers.isRangeDates(data.fechaInicio.toDate(), data.fechaFin.toDate()));
+    const items = await servicesFirebase.getAll("cursos");
+    const itemsNew = items.filter((data) => data.fechaInicio?.toDate && data.fechaFin?.toDate && helpers.isRangeDates(data.fechaInicio.toDate(), data.fechaFin.toDate()));
     setListCursosStore(itemsNew);
     setListCursos(itemsNew);
     setLoaded(true);
@@ -27,7 +27,6 @@ export default function ListaCursos({ navigation }) {
 
   function searchText(searchInput) {
     setSearch(searchInput);
-
     const searchNew = helpers.removeAccents(searchInput).trim().toLowerCase();
     if (searchNew.length >= 1) {
       filter(searchNew);
@@ -38,10 +37,9 @@ export default function ListaCursos({ navigation }) {
 
   function filter(search) {
     const arrayFilter = listCursosStore.filter((data) => {
-      const valueSearch = helpers.removeAccents(data.name).trim().toLowerCase();
+      const valueSearch = helpers.removeAccents(data.nombre || '').trim().toLowerCase();
       return valueSearch.includes(search);
     });
-
     setListCursos(arrayFilter);
   }
 
@@ -52,18 +50,35 @@ export default function ListaCursos({ navigation }) {
 
   function render(item, navigation) {
     return (
-      <Pressable onPress={() => navigation.navigate(routes.Cursos.VER_CURSOS, { dataCursos: item })}>
+      <Pressable
+        // *** CAMBIO CLAVE AQUÍ ***
+        // 1. Navega primero al Stack Navigator de Cursos (routes.DRAWER.CURSOS)
+        // 2. Luego, dentro de ese Stack, navega a la pantalla 'VerCurso' (routes.CURSOS.VER_CURSO)
+        // 3. Pasa los parámetros a la pantalla 'VerCurso'
+        onPress={() => navigation.navigate(routes.DRAWER.CURSOS, {
+          screen: routes.CURSOS.VER_CURSO,
+          params: { dataCursos: item },
+        })}
+      >
         <List.Item
           style={styles.item}
-          title={` ${item.name}`}
-          description={` ${item.apellido}`}
-          left={() => <Image source={{ uri: item.images }} style={styles.itemAvatar} />}
+          title={` ${item.nombre || 'Curso sin nombre'}`}
+          left={() => (
+            <Image source={{ uri: item.imagen || 'https://via.placeholder.com/60' }} style={styles.itemAvatar} />
+          )}
           right={() => <List.Icon icon="arrow-right-thick" />}
           titleStyle={{ fontWeight: "bold", fontSize: 16 }}
-          descriptionStyle={{ fontSize: 14 }}
-          titleNumberOfLines={4}
-          descriptionNumberOfLines={4}
-        />
+          titleNumberOfLines={2}
+        >
+          <View style={styles.itemContent}>
+            <Text style={styles.itemDescription} numberOfLines={2}>
+              {item.descripcionCompleta || 'No hay descripción disponible.'}
+            </Text>
+            {item.ponente && (
+              <Text style={styles.itemPresenter}>Ponente: {item.ponente}</Text>
+            )}
+          </View>
+        </List.Item>
       </Pressable>
     );
   }
@@ -93,6 +108,7 @@ export default function ListaCursos({ navigation }) {
           data={listCursos}
           renderItem={(data) => render(data.item, navigation)}
           contentContainerStyle={styles.contentContainerStyle}
+          keyExtractor={item => item.id || item.nombre}
         />
       )}
 
@@ -102,7 +118,7 @@ export default function ListaCursos({ navigation }) {
         }}
         style={styles.banner}
       >
-        {/* Aquí puedes poner un banner o dejarlo vacío */}
+        {/* Placeholder for banner */}
       </Pressable>
     </View>
   );
@@ -131,8 +147,22 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 20,
     resizeMode: "cover",
-    overlayColor: "#fff",
     overflow: "hidden",
+  },
+  itemContent: {
+    flex: 1,
+    paddingLeft: 10,
+    justifyContent: 'center',
+  },
+  itemDescription: {
+    fontSize: 14,
+    color: '#666',
+    marginBottom: 4,
+  },
+  itemPresenter: {
+    fontSize: 12,
+    color: '#999',
+    fontStyle: 'italic',
   },
   banner: {
     position: "absolute",

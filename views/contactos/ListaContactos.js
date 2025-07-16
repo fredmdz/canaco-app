@@ -1,44 +1,44 @@
-import { useState } from "react";
-import { StyleSheet, FlatList, Pressable, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, FlatList, Pressable, Image, ActivityIndicator, Text, View } from "react-native";
 import { List, Searchbar } from "react-native-paper";
 
-import { View as ViewUi, List as ListUi } from "../../components/ui";
+import { View as ViewUi } from "../../components/ui"; // ListUi no se usa directamente en este componente
 import { routes } from "../../routes";
-
-const contactos = [
-  {
-    id: 1,
-    nombre: "CANACO SERVYTUR Tuxtla",
-    telefono: "961 123 4567",
-    correo: "contacto@canacotuxtla.org.mx",
-    direccion: "Av Central 123, Tuxtla Gutiérrez, Chiapas",
-  },
-  {
-    id: 2,
-    nombre: "Atención a Socios",
-    telefono: "961 987 6543",
-    correo: "socios@canacotuxtla.org.mx",
-    direccion: "Av Central 123, Piso 2, Tuxtla Gutiérrez",
-  },
-  {
-    id: 3,
-    nombre: "Servicios Jurídicos",
-    telefono: "961 456 7890",
-    correo: "juridico@canacotuxtla.org.mx",
-    direccion: "Av Central 123, Despacho 5, Tuxtla Gutiérrez",
-  },
-];
+import { servicesFirebase } from "../../services/"; 
 
 function ListaContactos({ navigation }) {
-  const [listContactos, setListContactos] = useState(contactos);
+  const [listContactos, setListContactos] = useState([]);
+  const [originalContactos, setOriginalContactos] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);     
+
+  useEffect(() => {
+    const getContactos = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const items = await servicesFirebase.getAll("contactos");
+        
+        setOriginalContactos(items);
+        setListContactos(items);
+      } catch (err) {
+        console.error("Error al cargar contactos desde Firebase:", err);
+        setError("No se pudieron cargar los contactos. Intente de nuevo más tarde.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getContactos();
+  }, []);
 
   function searchText(text) {
     setSearch(text);
     if (text.trim().length === 0) {
-      setListContactos(contactos);
+      setListContactos(originalContactos);
     } else {
-      const filtrados = contactos.filter((item) =>
+      const filtrados = originalContactos.filter((item) =>
         item.nombre.toLowerCase().includes(text.toLowerCase())
       );
       setListContactos(filtrados);
@@ -57,8 +57,9 @@ function ListaContactos({ navigation }) {
           title={item.nombre}
           description={item.telefono}
           left={() => (
+            // *** CAMBIO AQUÍ: Usar item.imagen ***
             <Image
-              source={require("../../assets/login/logo1.png")}
+              source={item.imagen ? { uri: item.imagen } : require("../../assets/login/logo1.png")}
               style={styles.itemAvatar}
             />
           )}
@@ -67,6 +68,23 @@ function ListaContactos({ navigation }) {
           descriptionStyle={{ fontSize: 14 }}
         />
       </Pressable>
+    );
+  }
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#314c95" />
+        <Text style={{ marginTop: 10 }}>Cargando contactos...</Text>
+      </View>
+    );
+  }
+
+  if (error) {
+    return (
+      <View style={styles.errorContainer}>
+        <Text style={styles.errorText}>{error}</Text>
+      </View>
     );
   }
 
@@ -85,6 +103,11 @@ function ListaContactos({ navigation }) {
         renderItem={({ item }) => render(item)}
         keyExtractor={(item) => item.id.toString()}
         contentContainerStyle={styles.contentContainerStyle}
+        ListEmptyComponent={
+          <View style={styles.emptyContainer}>
+            <Text style={styles.emptyText}>No se encontraron contactos.</Text>
+          </View>
+        }
       />
     </ViewUi.Child>
   );
@@ -119,5 +142,34 @@ const styles = StyleSheet.create({
     height: 60,
     borderRadius: 20,
     resizeMode: "contain",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#f8f8f8',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
+    textAlign: 'center',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+  },
+  emptyText: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
   },
 });

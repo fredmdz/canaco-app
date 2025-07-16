@@ -1,48 +1,52 @@
 // views/menu/Menu.js
 import React, { useEffect, useState } from "react";
-import { 
-  View, 
-  FlatList, 
-  StyleSheet, 
-  ActivityIndicator,
-  Text 
-} from "react-native";
+import { View, FlatList, StyleSheet, ActivityIndicator, Text } from "react-native";
 import EmpresaCard from "./components/EmpresaCard";
-import { servicesFirebase } from "../../services/";
+import { servicesFirebase } from "../../services/"; // Asegúrate de que esta ruta sea correcta
 
 export default function Menu({ navigation }) {
   const [state, setState] = useState({
     empresas: [],
     loading: true,
-    error: null
+    error: null,
   });
 
   useEffect(() => {
     const getEmpresas = async () => {
       try {
         const items = await servicesFirebase.getAll("empresas");
-        
+
+        // --- INICIO DE CÓDIGO DE DEPURACIÓN AÑADIDO ---
+        console.log("--- DEBUG: Estado de carga de empresas ---");
+        console.log("Datos obtenidos de Firebase:", items);
+        console.log("Número de empresas obtenidas:", items ? items.length : 0);
+        if (items && items.length > 0) {
+          console.log("Primer empresa obtenida (para revisar estructura):", items[0]);
+        }
+        console.log("--- FIN DEBUG ---");
+        // --- FIN DE CÓDIGO DE DEPURACIÓN AÑADIDO ---
+
         setState({
           empresas: items.sort((a, b) => a.nombre.localeCompare(b.nombre)),
           loading: false,
-          error: null
+          error: null,
         });
       } catch (err) {
-        console.error("Error al cargar empresas:", err);
-        setState(prev => ({
+        console.error("Error al cargar empresas:", err); // Muestra el error completo en la consola
+        setState((prev) => ({
           ...prev,
           loading: false,
-          error: "Error al cargar las empresas. Por favor, intente más tarde."
+          error: "Error al cargar las empresas. Por favor, intente más tarde.",
         }));
       }
     };
-    
+
     getEmpresas();
   }, []);
 
   const renderItem = ({ item }) => (
-    <EmpresaCard 
-      empresa={item} 
+    <EmpresaCard
+      empresa={item}
       onPressVerMas={() => navigation.navigate("EmpresaDetalle", { empresa: item })}
     />
   );
@@ -68,9 +72,9 @@ export default function Menu({ navigation }) {
       <FlatList
         data={state.empresas}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         numColumns={2}
-        contentContainerStyle={styles.list}
+        contentContainerStyle={styles.list} 
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No hay empresas disponibles</Text>
@@ -81,17 +85,44 @@ export default function Menu({ navigation }) {
   );
 }
 
-
 const styles = StyleSheet.create({
-  emptyContainer: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f8f8f8',
+  },
+  loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#f8f8f8',
+  },
+  errorContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: '#f8f8f8',
+  },
+  errorText: {
+    fontSize: 16,
+    color: 'red',
+    textAlign: 'center',
+  },
+  list: {
+    paddingHorizontal: 10, 
+    paddingVertical: 10,
+   
+  },
+  emptyContainer: {
+    flex: 1, 
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
+    minHeight: 200, 
   },
   emptyText: {
     fontSize: 16,
     color: '#666',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 });

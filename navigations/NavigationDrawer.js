@@ -1,14 +1,17 @@
-import { Image, View } from "react-native";
+import { Image, View, StyleSheet } from "react-native";
 import { createDrawerNavigator, DrawerItemList, DrawerContentScrollView } from "@react-navigation/drawer";
 import { Text } from "react-native-paper";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-import Menu from "../views/menu/Menu";
-import Redes from "../views/redes/VerRedes";
+// Tus Stack Navigators (módulos)
 import NavigationEventos from "./modules/NavigationEventos";
-import NavigationBeneficios from "./modules/NavigationBeneficios";
 import NavigationCursos from "./modules/NavigationCursos";
 import NavigationContactos from "./modules/NavigationContactos";
 import NavigationOpciones from "./modules/NavigationOpciones";
+import NavigationEmpresas from "./modules/NavigationEmpresas";
+import NavigationOfertas from "./modules/NavigationOfertas";
+import NavigationRedes from "./modules/NavigationRedes"; // Importación del Stack Navigator de Redes
+
 import { routes } from "../routes";
 import { optionsScreen } from "./constants/optionsScreen";
 
@@ -23,11 +26,14 @@ export default function NavigationDrawer() {
     >
       <Drawer.Screen
         name={routes.MENU}
-        component={Menu}
+        component={NavigationEmpresas}
         options={{
           title: "Empresas",
           drawerLabel: () => <ItemMenuText text={"Empresas"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/empresas.png")} />,
+          headerShown: false,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="domain" size={size} color={color} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -36,53 +42,72 @@ export default function NavigationDrawer() {
         options={{
           headerShown: false,
           drawerLabel: () => <ItemMenuText text={"Eventos"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/eventos.png")} />,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="calendar-month" size={size} color={color} />
+          ),
         }}
       />
-      <Drawer.Screen
-        name={routes.DRAWER.BENEFICIOS}
-        component={NavigationBeneficios}
-        options={{
-          headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Beneficios"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/beneficios.png")} />,
-        }}
-      />
+    
       <Drawer.Screen
         name={routes.DRAWER.CURSOS}
         component={NavigationCursos}
         options={{
           headerShown: false,
           drawerLabel: () => <ItemMenuText text={"Cursos"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/cursos.png")} />,
+          drawerIcon: ({ color, size }) => ( // <-- ¡CORREGIDO AQUÍ: era 'draweREDESrIcon' y ahora es 'drawerIcon'!
+            <Icon name="book-open" size={size} color={color} />
+          ),
         }}
       />
+
+      {/* PANTALLA DE OFERTAS / PROMOCIONES */}
       <Drawer.Screen
-        name={routes.REDES}
-        component={Redes}
+        name={routes.DRAWER.OFERTAS}
+        component={NavigationOfertas}
+        options={{
+          headerShown: false,
+          drawerLabel: () => <ItemMenuText text={"Promociones"} />,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="tag-multiple" size={size} color={color} />
+          ),
+        }}
+      />
+
+      {/* PANTALLA DE REDES SOCIALES (AHORA APUNTA AL STACK NAVIGATOR) */}
+      <Drawer.Screen
+        name={routes.DRAWER.REDES} // <-- Asegúrate que routes.DRAWER.REDES exista en tu routes.js
+        component={NavigationRedes}
         options={{
           title: "Redes sociales",
           drawerLabel: () => <ItemMenuText text={"Redes sociales"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/redes.png")} />,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="share-variant" size={size} color={color} />
+          ),
+          headerShown: false,
         }}
       />
-       <Drawer.Screen
+
+      <Drawer.Screen
         name={routes.DRAWER.CONTACTOS}
         component={NavigationContactos}
         options={{
           headerShown: false,
           drawerLabel: () => <ItemMenuText text={"Contáctanos"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/contactanos.png")} />,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="phone" size={size} color={color} />
+          ),
         }}
       />
 
-       <Drawer.Screen
+      <Drawer.Screen
         name={routes.DRAWER.OPCIONES}
         component={NavigationOpciones}
         options={{
           headerShown: false,
           drawerLabel: () => <ItemMenuText text={"Opciones"} />,
-          drawerIcon: () => <ItemMenuLogo img={require("../assets/menu/drawer/opciones.png")} />,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="cog" size={size} color={color} />
+          ),
         }}
       />
     </Drawer.Navigator>
@@ -119,20 +144,14 @@ const MenuScroll = ({ ...props }) => {
   );
 };
 
-const ItemMenuLogo = ({ img }) => {
-  return (
-    <Image
-      source={img}
-      resizeMode="contain"
-      style={{
-        width: 32,
-        height: 32,
-      }}
-    />
-  );
-};
-
 const ItemMenuText = ({ text }) => {
-  return <Text style={{ color: "#314c95", fontSize: 16, marginLeft: -18 }}>{text}</Text>;
+  return <Text style={styles.itemMenuText}>{text}</Text>;
 };
 
+const styles = StyleSheet.create({
+  itemMenuText: {
+    color: "#314c95",
+    fontSize: 16,
+    marginLeft: -18,
+  },
+});

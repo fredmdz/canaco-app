@@ -1,45 +1,57 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, FlatList, Pressable, Image, View, Dimensions } from "react-native";
+import { StyleSheet, FlatList, Pressable, Image, View, Dimensions, Text } from "react-native";
 import { Searchbar } from "react-native-paper";
 
 import { servicesFirebase } from "../../services/servicesFirebase";
-import { PreLoader, Background, View as ViewUi, List as ListUi } from "../../components/ui";
+import { PreLoader, View as ViewUi, List as ListUi } from "../../components/ui"; // 'Background' removed from import
 import { helpers } from "../../utilities/helpers";
 import { routes } from "../../routes";
 
 export default function ListaOfertas({ navigation }) {
   const [listOfertas, setListOfertas] = useState([]);
-  const [listOfertasStore, setListMascotasStore] = useState([]);
+  const [listOfertasStore, setListOfertasStore] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [search, setSearch] = useState("");
 
   //========================= Get
   useEffect(() => {
-    getAll();
+    getAllPromociones();
   }, []);
 
-  async function getAll() {
+  async function getAllPromociones() {
     const items = await servicesFirebase.getAll("promociones");
-    setListMascotasStore(items);
-    setListOfertas(items);
+    // Mapea los ítems para asegurar que 'images' no sea null y que 'name' sea prioritario
+    const processedItems = items.map(item => ({
+      ...item,
+      // Usar un placeholder si images es null o vacío
+      images: item.images || 'https://via.placeholder.com/150?text=Sin+Imagen', // URL de placeholder
+      // Asegurarse de que 'name' es el campo principal para el título si 'nombre' no existe
+      displayName: item.name || item.nombre || 'Promoción sin título',
+    }));
+
+    setListOfertasStore(processedItems);
+    setListOfertas(processedItems);
     setLoaded(true);
   }
+
   //========================= Busqueda
-  function searchText(searchInput) {
+  function handleSearchText(searchInput) {
     setSearch(searchInput);
 
     const searchNew = helpers.removeAccents(searchInput).trim().toLowerCase();
     if (searchNew.length >= 1) {
-      filter(searchNew);
-    } else if (searchNew.length == 0) {
+      filterList(searchNew);
+    } else if (searchNew.length === 0) {
       resetSearch();
     }
   }
 
-  function filter(search) {
+  function filterList(searchKeyword) {
     const arrayFilter = listOfertasStore.filter((data) => {
-      const valueSearch = helpers.removeAccents(data.direccion).trim().toLowerCase();
-      return valueSearch.includes(search);
+      // Prioriza la búsqueda por 'name', luego 'direccion'
+      const nameMatch = helpers.removeAccents(data.name || '').trim().toLowerCase().includes(searchKeyword);
+      const addressMatch = helpers.removeAccents(data.direccion || '').trim().toLowerCase().includes(searchKeyword);
+      return nameMatch || addressMatch;
     });
 
     setListOfertas(arrayFilter);
@@ -50,79 +62,63 @@ export default function ListaOfertas({ navigation }) {
     setListOfertas(listOfertasStore);
   }
 
-  //========================= Busqueda
-  function searchText(searchInput) {
-    setSearch(searchInput);
-
-    const searchNew = helpers.removeAccents(searchInput).trim().toLowerCase();
-    if (searchNew.length >= 1) {
-      filter(searchNew);
-    } else if (searchNew.length == 0) {
-      resetSearch();
-    }
-  }
-
-  function filter(search) {
-    const arrayFilter = listOfertas.filter((data) => {
-      const valueSearch = helpers.removeAccents(data.direccion).trim().toLowerCase();
-      return valueSearch.includes(search);
-    });
-
-    setListOfertas(arrayFilter);
-  }
-
-  function resetSearch() {
-    setSearch("");
-    setListOfertas(listOfertasStore);
-  }
-
-  function render(item, navigation) {
+  function renderOfertaItem({ item }) {
     return (
       <Pressable onPress={() => navigation.navigate(routes.OFERTAS.VER_OFERTA, { dataOferta: item })}>
         <View style={styles.item}>
           <Image
-            source={{
-              uri: item.images,
-            }}
+            source={{ uri: item.images }}
             style={styles.itemAvatar}
           />
+          {item.displayName && <Text style={styles.itemName}>{item.displayName}</Text>}
         </View>
       </Pressable>
     );
   }
+
   if (!loaded) {
     return <PreLoader />;
   }
 
   return (
-    <Background.Image source={require("../../assets/fondos/menu.png")}>
+    // Reemplazado Background.Image con una View simple para contener el contenido.
+    // Añadimos 'style={styles.container}' para que ocupe todo el espacio.
+    <View style={styles.container}> 
       <ViewUi.Child>
         <Searchbar
-          placeholder="Busca tu cuidad"
-          onChangeText={(text) => searchText(text)}
+          placeholder="Busca por nombre o dirección"
+          onChangeText={handleSearchText}
           value={search}
           style={styles.searchbar}
         />
 
         {helpers.isArrayEmpty(listOfertas) && (
-          <ListUi.Empty text={"Lo lamentamos, por el momento no hay promociones en esta ciudad ¡PROXIMAMENTE!"} />
+          <ListUi.Empty text={"Lo lamentamos, por el momento no hay promociones disponibles que coincidan con tu búsqueda."} />
         )}
       </ViewUi.Child>
 
       {!helpers.isArrayEmpty(listOfertas) && (
         <FlatList
           data={listOfertas}
-          renderItem={(data) => render(data.item, navigation)}
+          renderItem={renderOfertaItem}
           numColumns={2}
           contentContainerStyle={styles.contentContainerStyle}
           columnWrapperStyle={{ gap: 10 }}
         />
       )}
-    </Background.Image>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  // Nuevo estilo 'container' para la View principal, similar al de VerRedes
+  container: {
+    flex: 1, // Ocupa todo el espacio disponible
+    backgroundColor: 'transparent', // Permite que el fondo de la pantalla padre se vea
+    // Puedes añadir padding o alignItems si necesitas que el contenido esté centrado o con márgenes generales
+    // paddingHorizontal: 10,
+    // alignItems: 'center',
+  },
   contentContainerStyle: {
     paddingVertical: 10,
     paddingHorizontal: 10,
@@ -133,8 +129,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   item: {
-    width: Dimensions.get("window").width / 2 - 15,
-    // borderWidth: 1,
+    width: Dimensions.get("window").width / 2 - 15, // Ajusta el ancho si cambias el paddingHorizontal del container o contentContainerStyle
   },
   itemAvatar: {
     height: 190,
@@ -143,4 +138,11 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overlayColor: "#fff",
   },
+  itemName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 5,
+    color: '#333',
+  }
 });

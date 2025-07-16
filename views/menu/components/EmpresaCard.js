@@ -1,31 +1,26 @@
-import React from 'react';
-import { 
-  View, 
-  Text, 
-  Image, 
-  TouchableOpacity, 
-  StyleSheet,
-  Dimensions // ¡Importación crucial que faltaba!
-} from 'react-native';
+import React from 'react';import { View, Text, Image, TouchableOpacity, StyleSheet,Dimensions} from 'react-native';
 
 const EmpresaCard = ({ empresa, onPressVerMas }) => {
   return (
     <TouchableOpacity style={styles.card} onPress={onPressVerMas}>
-      <Image source={{ uri: empresa.imagen }} style={styles.image} />
+      <Image 
+        source={{ uri: empresa.imagen }} 
+        style={styles.image} 
+      />
       <View style={styles.content}>
         <Text style={styles.title}>{empresa.nombre}</Text>
         <Text style={styles.description} numberOfLines={2}>
-          {empresa.descripcionBreve}
+          {empresa.description || empresa.descripcionBreve} 
         </Text>
-        <View style={styles.button}>
+        
+        <TouchableOpacity style={styles.buttonStyled} onPress={onPressVerMas}>
           <Text style={styles.buttonText}>Ver más</Text>
-        </View>
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
 };
 
-// Usando Dimensions para hacer el diseño responsive
 const styles = StyleSheet.create({
   card: {
     flex: 1,
@@ -34,7 +29,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     overflow: 'hidden',
     elevation: 3,
-    maxWidth: Dimensions.get('window').width / 2 - 16, // Uso de Dimensions
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3.84,
+    maxWidth: Dimensions.get('window').width / 2 - 16, 
+    minHeight: 200, 
   },
   image: {
     width: '100%',
@@ -42,24 +42,32 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   content: {
+    flex: 1, 
     padding: 10,
+    alignItems: 'center', 
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 5, 
     color: '#314c95',
+    textAlign: 'center', 
   },
   description: {
     fontSize: 14,
     color: '#666',
-    marginBottom: 10,
+    textAlign: 'center', 
+    lineHeight: 10, 
+    marginBottom: 1, 
   },
-  button: {
+  buttonStyled: { 
     backgroundColor: '#314c95',
-    padding: 8,
+   
+    paddingVertical: 10, 
+    paddingHorizontal: 30, 
     borderRadius: 5,
-    alignItems: 'center',
+    marginTop: 5, 
   },
   buttonText: {
     color: 'white',

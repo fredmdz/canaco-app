@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Pressable, Linking, Text, Image, View } from "react-native";
+import { Pressable, Linking, Text } from "react-native";
+import dayjs from "dayjs";
 
 import { View as ViewUi, List as ListUi } from "../../components/ui";
 
@@ -16,20 +17,11 @@ export default function VerEvento({ route }) {
       };
       setEventos(itemNew);
     }
-  }, [dataEventos]);
+  }, []);
 
   return (
     <ViewUi.Scroll.Parent>
-      {/* Título grande y centrado */}
-      <View style={{ alignItems: "center", marginTop: 20, marginBottom: 10 }}>
-        <Text style={{ fontSize: 24, fontWeight: "bold", color: "#314c95", marginBottom: 5 }}>
-          {eventos.name || "Evento"}
-        </Text>
-        <Image
-          source={require("../../assets/login/logo1.png")}
-          style={{ width: 350, height: 200, resizeMode: "contain" }}
-        />
-      </View>
+      <ListUi.Header image={eventos.images} title={`${eventos.name}`} />
 
       <ListUi.Parent>
         <ListUi.Item
@@ -47,7 +39,7 @@ export default function VerEvento({ route }) {
           <ListUi.Item
             icon={"map-marker"}
             color={"#FF7F37"}
-            title={"Dirección"}
+            title={"Dirección "}
             subtitle={<Text>{eventos.direccion}</Text>}
           />
         </Pressable>
@@ -58,7 +50,13 @@ export default function VerEvento({ route }) {
           title={"Fecha"}
           subtitle={<Text>{eventos.apellido}</Text>}
         />
-        <ListUi.Item icon={"clock-outline"} color={"green"} title={"Horario"} subtitle={<Text>{eventos.hor}</Text>} />
+
+        <ListUi.Item
+          icon={"clock-outline"}
+          color={"green"}
+          title={"Horario"}
+          subtitle={<Text>{eventos.hor}</Text>}
+        />
 
         <Pressable onPress={() => eventos.web && Linking.openURL(eventos.web)}>
           <ListUi.Item
