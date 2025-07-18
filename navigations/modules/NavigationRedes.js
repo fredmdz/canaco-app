@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import VerRedes from "../../views/redes/VerRedes"; // <-- Ensure this path is correct!
+import VerRedes from "../../views/redes/VerRedes"; 
 
 import { routes } from "../../routes";
 import { optionsScreen } from "../constants/optionsScreen";
@@ -14,7 +14,7 @@ export default function NavigationRedes() {
         name={routes.REDES.VER_REDES}
         component={VerRedes}
         options={{
-          title: "Nuestras Redes Sociales", // This will be the title in your header
+          title: "Nuestras Redes Sociales", 
           headerShown: true, // <-- IMPORTANT: This ensures the header (and back button) is visible
         }}
       />

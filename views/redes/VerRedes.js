@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ScrollView, View, Text, Pressable, Image, Linking, StyleSheet, Dimensions, FlatList } from "react-native";
 import { servicesFirebase } from "../../services/servicesFirebase";
-import { PreLoader, List as ListUi } from "../../components/ui"; // 'Background' eliminado
+import { PreLoader, List as ListUi } from "../../components/ui";
 
 const numColumns = 2;
 const screenWidth = Dimensions.get("window").width;
@@ -62,7 +62,7 @@ export default function VerRedes() {
     <View style={styles.container}>
       <Text style={styles.title}>Consulta nuestras redes sociales</Text>
 
-      {/* --- POTENCIAL FUENTE DEL ERROR --- */}
+ 
       {redesSociales.length === 0 ? (
         <ListUi.Empty text={"No hay redes sociales configuradas por el momento."} />
       ) : (

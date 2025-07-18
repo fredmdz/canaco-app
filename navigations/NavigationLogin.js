@@ -18,7 +18,7 @@ export default function NavigationLogin() {
       <Stack.Screen
         name={routes.START.INDEX}
         component={Start}
-        options={{ headerShown: false }} // Oculta el header en Start
+        options={{ headerShown: false }} 
       />
       <Stack.Screen
         name={routes.START.LOGIN}

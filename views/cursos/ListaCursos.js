@@ -18,12 +18,13 @@ export default function ListaCursos({ navigation }) {
   }, []);
 
   async function getAll() {
-    const items = await servicesFirebase.getAll("cursos");
-    const itemsNew = items.filter((data) => data.fechaInicio?.toDate && data.fechaFin?.toDate && helpers.isRangeDates(data.fechaInicio.toDate(), data.fechaFin.toDate()));
-    setListCursosStore(itemsNew);
-    setListCursos(itemsNew);
-    setLoaded(true);
+  const items = await servicesFirebase.getAll("cursos");
+
+  setListCursosStore(items);
+  setListCursos(items);
+  setLoaded(true);
   }
+
 
   function searchText(searchInput) {
     setSearch(searchInput);
@@ -51,10 +52,6 @@ export default function ListaCursos({ navigation }) {
   function render(item, navigation) {
     return (
       <Pressable
-        // *** CAMBIO CLAVE AQUÍ ***
-        // 1. Navega primero al Stack Navigator de Cursos (routes.DRAWER.CURSOS)
-        // 2. Luego, dentro de ese Stack, navega a la pantalla 'VerCurso' (routes.CURSOS.VER_CURSO)
-        // 3. Pasa los parámetros a la pantalla 'VerCurso'
         onPress={() => navigation.navigate(routes.DRAWER.CURSOS, {
           screen: routes.CURSOS.VER_CURSO,
           params: { dataCursos: item },

@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import ListaCursos from "../../views/cursos/ListaCursos";
-import VerCurso from "../../views/cursos/VerCurso"; // ✅ Import correcto
+import VerCurso from "../../views/cursos/VerCurso"; 
 
 import { routes } from "../../routes";
 import { optionsScreen } from "../constants/optionsScreen";
@@ -20,7 +20,7 @@ export default function NavigationCursos() {
         options={{ title: "Cursos" }}
       />
       <Stack.Screen
-        name={routes.CURSOS.VER_CURSO} // ✅ en singular y desde routes
+        name={routes.CURSOS.VER_CURSO} 
         component={VerCurso}
         options={{ title: "Información del curso" }}
       />

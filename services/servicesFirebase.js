@@ -5,13 +5,13 @@ import { getStorage } from "firebase/storage";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBvrmocWYpxvNmEZqYfkfeYZJMCCxXkXwM",
-  authDomain: "canaco-81fd8.firebaseapp.com",
-  projectId: "canaco-81fd8",
-  storageBucket: "canaco-81fd8.firebasestorage.app",
-  messagingSenderId: "768157776458",
-  appId: "1:768157776458:web:eeaf9839397be40d5584b3",
-  measurementId: "G-WVTD1XJ8YZ"
+  apiKey: "AIzaSyC_-nhp9IxWhx5IBtt6PWGTrSLiOMu5DZA",
+  authDomain: "nuevo-ca802.firebaseapp.com",
+  databaseURL: "https://nuevo-ca802-default-rtdb.firebaseio.com",
+  projectId: "nuevo-ca802",
+  storageBucket: "nuevo-ca802.appspot.com",
+  messagingSenderId: "463796709710",
+  appId: "1:463796709710:web:285ba13da19306bd71961f"
 };
 
 //=========================  Initialize Firebase

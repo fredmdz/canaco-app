@@ -30,8 +30,7 @@ export default function VerOferta({ route }) {
     }
   }, [dataOferta]);
 
-  // Función para abrir el mapa (se mantiene, aunque no se muestre el item de dirección)
-  // Podrías reutilizarla si en el futuro decides poner un botón de "Ver en mapa"
+  // Función para abrir el mapa con la ubicación de la oferta
   const handleOpenMap = () => {
     const { lat, lng, direccion } = oferta;
     if (lat && lng) {
@@ -67,16 +66,14 @@ export default function VerOferta({ route }) {
   return (
     <SafeAreaView style={styles.container}>
       <ViewUi.Scroll.Parent>
-
-        {/* Nuevo Header personalizado, similar a VerContacto */}
         <View style={styles.headerContainer}>
           <Text style={styles.headerTitle}>
             {oferta.nombrePromocion}
           </Text>
           <Image
-            source={{ uri: oferta.images }} // Aquí se usa la URL de la imagen de la oferta
+            source={{ uri: oferta.images }} s
             style={styles.headerImage}
-            resizeMode="contain" // O "cover" dependiendo de tu preferencia
+            resizeMode="contain" //
           />
         </View>
 
@@ -108,9 +105,6 @@ export default function VerOferta({ route }) {
                 subtitle={<Text style={styles.subtitleText}>{oferta.vigenciaFecha}</Text>}
               />
             )}
-
-            {/* SE QUITA EL ListUi.Item DE DIRECCIÓN */}
-            {/* Si aún quieres un botón para abrir el mapa, podrías añadir un Pressable aquí */}
 
             {oferta.telefono && (
               <Pressable onPress={() => Linking.openURL(`tel:${oferta.telefono}`).catch(err => console.error("No se pudo llamar:", err))}>
@@ -150,15 +144,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     alignItems: "center",
     marginTop: 20,
-    marginBottom: 20, // Espacio después del header
+    marginBottom: 20, 
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#314c95",
-    marginBottom: 10, // Espacio entre título e imagen
-    textAlign: 'center', // Centrar el título
-    paddingHorizontal: 20, // Pequeño padding para que no se pegue a los bordes
+    marginBottom: 10, 
+    textAlign: 'center', 
+    paddingHorizontal: 20, 
   },
   headerImage: {
     width: '90%', // O un valor fijo como 350

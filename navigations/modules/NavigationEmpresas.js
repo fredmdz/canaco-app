@@ -1,21 +1,18 @@
 // navigation/modules/NavigationEmpresas.js
 import React from 'react';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { getHeaderTitle } from '@react-navigation/elements'; // Necesario para obtener el título de la pantalla
-import { Appbar, useTheme } from 'react-native-paper'; // 'useTheme' no es estrictamente necesario aquí si el color es fijo, pero es una buena práctica si usas el tema global.
-import { Platform } from 'react-native'; // Necesario para 'Platform.OS'
+import { getHeaderTitle } from '@react-navigation/elements'; 
+import { Appbar, useTheme } from 'react-native-paper'; 
+import { Platform } from 'react-native'; 
 
-// Importa tus componentes de pantalla de empresas
-import MenuScreen from '../../views/menu/Menu'; // Asegura que esta ruta sea correcta
-import EmpresaDetalleScreen from '../../views/menu/EmpresaDetalle'; // Asegura que esta ruta sea correcta
+
+import MenuScreen from '../../views/menu/Menu';
+import EmpresaDetalleScreen from '../../views/menu/EmpresaDetalle'; 
 
 const Stack = createNativeStackNavigator();
 
 export default function NavigationEmpresas() {
-  // Puedes usar useTheme() si quieres acceder a las propiedades del tema global de Paper,
-  // pero para un color fijo, no es estrictamente necesario aquí.
-  // const theme = useTheme(); 
-
+  
   return (
     <Stack.Navigator
       initialRouteName="MenuScreen"
@@ -48,12 +45,11 @@ export default function NavigationEmpresas() {
       <Stack.Screen
         name="MenuScreen"
         component={MenuScreen}
-        options={{ title: "Empresas" }} // Título que se mostrará en el header para esta pantalla
+        options={{ title: "Empresas" }} 
       />
       <Stack.Screen
         name="EmpresaDetalle"
         component={EmpresaDetalleScreen}
-        // El título de esta pantalla se tomará del nombre de la empresa pasada como parámetro
         options={({ route }) => ({ title: route.params.empresa.nombre || 'Detalle de Empresa' })}
       />
     </Stack.Navigator>

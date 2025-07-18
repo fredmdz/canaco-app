@@ -211,7 +211,7 @@ export default function VerOpciones() {
   );
 }
 
-// Tus estilos permanecen igual
+
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,

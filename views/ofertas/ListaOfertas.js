@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, Pressable, Image, View, Dimensions, Text } from "
 import { Searchbar } from "react-native-paper";
 
 import { servicesFirebase } from "../../services/servicesFirebase";
-import { PreLoader, View as ViewUi, List as ListUi } from "../../components/ui"; // 'Background' removed from import
+import { PreLoader, View as ViewUi, List as ListUi } from "../../components/ui"; 
 import { helpers } from "../../utilities/helpers";
 import { routes } from "../../routes";
 
@@ -20,12 +20,10 @@ export default function ListaOfertas({ navigation }) {
 
   async function getAllPromociones() {
     const items = await servicesFirebase.getAll("promociones");
-    // Mapea los ítems para asegurar que 'images' no sea null y que 'name' sea prioritario
+   
     const processedItems = items.map(item => ({
       ...item,
-      // Usar un placeholder si images es null o vacío
-      images: item.images || 'https://via.placeholder.com/150?text=Sin+Imagen', // URL de placeholder
-      // Asegurarse de que 'name' es el campo principal para el título si 'nombre' no existe
+      images: item.images || 'https://via.placeholder.com/150?text=Sin+Imagen', 
       displayName: item.name || item.nombre || 'Promoción sin título',
     }));
 
@@ -111,13 +109,10 @@ export default function ListaOfertas({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  // Nuevo estilo 'container' para la View principal, similar al de VerRedes
   container: {
-    flex: 1, // Ocupa todo el espacio disponible
-    backgroundColor: 'transparent', // Permite que el fondo de la pantalla padre se vea
-    // Puedes añadir padding o alignItems si necesitas que el contenido esté centrado o con márgenes generales
-    // paddingHorizontal: 10,
-    // alignItems: 'center',
+    flex: 1, 
+    backgroundColor: 'transparent', 
+
   },
   contentContainerStyle: {
     paddingVertical: 10,
@@ -129,7 +124,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   item: {
-    width: Dimensions.get("window").width / 2 - 15, // Ajusta el ancho si cambias el paddingHorizontal del container o contentContainerStyle
+    width: Dimensions.get("window").width / 2 - 15, 
   },
   itemAvatar: {
     height: 190,

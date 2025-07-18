@@ -14,7 +14,7 @@ export default function NavigationContactos() {
       <Stack.Screen
         name={routes.CONTACTOS.LISTA_CONTACTOS}
         component={ListaContactos}
-        options={{ title: "Contáctanos" }}
+        options={{ title: "Directorio" }}
       />
       <Stack.Screen name={routes.CONTACTOS.VER_CONTACTO} component={VerContacto} options={{ title: "Contacto" }} />
       <Stack.Screen

@@ -1,4 +1,6 @@
 import dayjs from "dayjs";
+import isBetween from 'dayjs/plugin/isBetween'; // Importar el plugin isBetween
+dayjs.extend(isBetween); // Extender dayjs con el plugin
 
 const helpers = {
   removeAccents: (str) => {
@@ -9,12 +11,8 @@ const helpers = {
       t,
       i;
 
-    // While there remain elements to shuffle...
     while (m) {
-      // Pick a remaining element…
       i = Math.floor(Math.random() * m--);
-
-      // And swap it with the current element.
       t = array[m];
       array[m] = array[i];
       array[i] = t;
@@ -32,23 +30,15 @@ const helpers = {
   },
 
   isObjectEmpty(object) {
-    if (Object.keys(object).length === 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return Object.keys(object).length === 0; // Simplificado
   },
 
   isArrayEmpty(array) {
-    if (array.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return array.length === 0; // Simplificado
   },
 
   trimObject(object) {
-    const newObject = object;
+    const newObject = { ...object }; // Crear una copia para evitar mutar el original directamente
     for (const key in newObject) {
       if (typeof newObject[key] === "string") {
         newObject[key] = newObject[key].trim();
@@ -57,28 +47,29 @@ const helpers = {
     return newObject;
   },
 
+  // === CÓDIGO CORREGIDO PARA isRangeDates ===
   isRangeDates(dateInit, dateEnd) {
-    return dayjs().isBetween(dayjs(dateInit), dayjs(dateEnd), "day", "[]");
+    const now = dayjs(); // Fecha y hora actual
+    const startOfDayNow = dayjs().startOf('day'); // Inicio del día actual
+    const endOfDayNow = dayjs().endOf('day');   // Fin del día actual
+
+    const eventStart = dayjs(dateInit).startOf('day'); // Inicio del día del evento
+    const eventEnd = dayjs(dateEnd).endOf('day');   // Fin del día del evento
+
+    // Un evento es "vigente" o "futuro" si:
+    // 1. Su rango de fechas (fechaInicio al fechaFin) incluye el día actual, O
+    // 2. Su fecha de inicio es después del día actual.
+    const isCurrentlyActive = now.isBetween(eventStart, eventEnd, 'day', '[]'); // El evento está activo hoy
+    const isFutureEvent = eventStart.isAfter(endOfDayNow); // El evento empieza después de hoy
+
+    return isCurrentlyActive || isFutureEvent;
   },
+  // ===========================================
 
   isRangeDistance(data) {
+    // Esta función parece ser para otra cosa (distancia) y está comentada.
+    // La dejaremos tal cual, ya que el problema estaba en isRangeDates.
     const isActive = dayjs().isBetween(dayjs(data.fechaInicio.toDate()), dayjs(data.fechaFin.toDate()), "day", "[]");
-
-    // if (isActive) {
-    //   const thresholds = [
-    //     //{ maxDistance: 20 },
-    //     //{ maxDistance: 100 },
-    //     { minDistance: 100, maxDistance: 120 },
-    //   ];
-    //   for (const threshold of thresholds) {
-    //     if (km >= threshold.minDistance && km <= threshold.maxDistance) {
-    //       // console.log("Esta es la fecha inicio: ", fechaInicio);
-    //       // console.log("Esta es la fecha final: ", fechaFin);
-    //       // console.log("Esta es la fecha actual: ", dayjs());
-    //       return true;
-    //     }
-    //   }
-    // }
     return isActive;
   },
 };

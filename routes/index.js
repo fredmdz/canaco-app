@@ -1,5 +1,5 @@
 const routes = {
-  MENU: "menu", // This route name is typically used for your initial screen (e.g., NavigationEmpresas)
+  MENU: "menu", 
 
   START: {
     INDEX: "start",
@@ -11,21 +11,18 @@ const routes = {
   DRAWER: {
     OPCIONES: "drawerOpciones",
     EVENTOS: "drawerEventos",
-    // BENEFICIOS: "drawerBeneficios", // <-- REMOVED this line as per your request
+    // BENEFICIOS: "drawerBeneficios", 
     CURSOS: "drawerCursos",
     CONTACTOS: "drawerContactos",
     PREGUNTAS: "drawerPreguntas",
-    OFERTAS: "drawerOfertas", // <-- TYPO CORRECTED: "dreawerOfertas" to "drawerOfertas"
-    REDES: "drawerRedes", // <-- ADDED: The name for the Redes Social drawer item
+    OFERTAS: "drawerOfertas", 
+    REDES: "drawerRedes", 
   },
 
   EVENTOS: {
     LISTA_EVENTOS: "listaEventos",
     VER_EVENTO: "verEvento",
   },
-
-  // Removed the duplicate 'OFERTAS' object that had only two properties.
-  // The complete 'OFERTAS' object is kept below.
 
   CURSOS: {
     LISTA_CURSOS: "listaCursos",
@@ -38,15 +35,13 @@ const routes = {
     VER_FORMULARIO: "verFormulario",
   },
 
-  // --- Complete OFERTAS object ---
   OFERTAS: {
     LISTA_OFERTAS: "listaOfertas",
     VER_OFERTA: "verOferta",
   },
 
-  // --- REDES Sociales (Internal Stack Navigator Routes) ---
-  REDES: { // This object defines the screens *inside* your NavigationRedes Stack
-    VER_REDES: "verRedes", // This is the actual screen name for your VerRedes.js component
+  REDES: { 
+    VER_REDES: "verRedes", 
   },
 
   OPCIONES: {

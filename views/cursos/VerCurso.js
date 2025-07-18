@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
-import { Pressable, Linking, Text, StyleSheet, Platform, View, SafeAreaView } from "react-native"; // Import View and SafeAreaView
+import { Pressable, Linking, Text, StyleSheet, Platform, View, SafeAreaView } from "react-native";
 import dayjs from "dayjs";
 import 'dayjs/locale/es'; // Import Spanish locale for dayjs
 dayjs.locale('es'); // Set locale to Spanish
 
-// import { Background, View as ViewUi, List as ListUi } from "../../components/ui";
-// Modificado para no usar Background.Image
+
 import { View as ViewUi, List as ListUi } from "../../components/ui";
 
 export default function VerCurso({ route }) {
-  const { dataCursos } = route.params; // dataCursos is the complete course object from Firebase
+  const { dataCursos } = route.params; 
 
   const [cursoDetalle, setCursoDetalle] = useState({});
 
@@ -44,7 +43,7 @@ export default function VerCurso({ route }) {
       const mapUrl = Platform.select({
         ios: `maps:0,0?q=${encodedAddress}`,
         android: `geo:0,0?q=${encodedAddress}`,
-        default: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
+        default: `http://maps.google.com/?q=${encodedAddress}`, // Fallback for other platforms/simulators
       });
 
       Linking.openURL(mapUrl)
@@ -57,10 +56,42 @@ export default function VerCurso({ route }) {
     }
   };
 
-  // Handle empty or not-yet-loaded cursoDetalle
+  // --- NUEVAS FUNCIONES PARA CONTACTO ---
+  const handleWhatsApp = () => {
+    // Asumiendo que cursoDetalle.contacto es el número.
+    // Limpiamos el número por si tiene espacios, guiones o paréntesis.
+    const numeroLimpio = cursoDetalle.contacto ? cursoDetalle.contacto.replace(/[^0-9]/g, '') : '';
+    // Agrega el prefijo de país si no lo tiene. Para México es 52.
+    // Esto es una suposición, si tu admin ya lo incluye, ajusta.
+    const numeroWhatsApp = numeroLimpio.startsWith('52') ? numeroLimpio : `52${numeroLimpio}`;
+
+    if (numeroLimpio) {
+      Linking.openURL(`http://api.whatsapp.com/send?phone=${numeroWhatsApp}`)
+        .catch(err => {
+          console.error('Error al intentar abrir WhatsApp:', err);
+          alert('No se pudo abrir WhatsApp. Asegúrate de tener la aplicación instalada y un número válido.');
+        });
+    } else {
+      alert('No hay un número de contacto de WhatsApp disponible.');
+    }
+  };
+
+  const handleCall = () => {
+    const numeroLimpio = cursoDetalle.contacto ? cursoDetalle.contacto.replace(/[^0-9]/g, '') : '';
+    if (numeroLimpio) {
+      Linking.openURL(`tel:${numeroLimpio}`)
+        .catch(err => {
+          console.error('Error al intentar hacer la llamada:', err);
+          alert('No se pudo iniciar la llamada. Asegúrate de tener un número de teléfono válido.');
+        });
+    } else {
+      alert('No hay un número de teléfono disponible para llamar.');
+    }
+  };
+  // --- FIN NUEVAS FUNCIONES ---
+
   if (!cursoDetalle || Object.keys(cursoDetalle).length === 0) {
     return (
-      // Usar View o SafeAreaView en lugar de Background.Image
       <SafeAreaView style={styles.container}>
         <ViewUi.Scroll.Parent>
           <Text style={styles.loadingText}>Cargando detalles del curso...</Text>
@@ -70,17 +101,14 @@ export default function VerCurso({ route }) {
   }
 
   return (
-    // Usar View o SafeAreaView en lugar de Background.Image
     <SafeAreaView style={styles.container}>
-      {/* Main Course Title and Image */}
       <ListUi.Header
         image={cursoDetalle.imagen || 'https://via.placeholder.com/400'} // Fallback if no image
         title={`${cursoDetalle.nombre || 'Curso sin nombre'}`} // Fallback if no name
       />
 
       <ViewUi.Scroll.Parent>
-        <ListUi.Parent>
-          {/* Full Course Description */}
+        <ListUi.Parent>      
           {cursoDetalle.descripcionCompleta && (
             <ListUi.Item
               icon={"text-box-multiple-outline"}
@@ -90,7 +118,6 @@ export default function VerCurso({ route }) {
             />
           )}
 
-          {/* Presenter / Instructor */}
           {cursoDetalle.ponente && (
             <ListUi.Item
               icon={"account-tie"}
@@ -100,7 +127,6 @@ export default function VerCurso({ route }) {
             />
           )}
 
-          {/* Course Dates */}
           {(cursoDetalle.fechaInicioFormateada || cursoDetalle.fechaFinFormateada) && (
              <ListUi.Item
                icon={"calendar-month"}
@@ -108,13 +134,12 @@ export default function VerCurso({ route }) {
                title={"Fechas"}
                subtitle={
                  <Text style={styles.subtitleText}>
-                   Del {cursoDetalle.fechaInicioFormateada} al {cursoDetalle.fechaFinFormateada}
+                    Del {cursoDetalle.fechaInicioFormateada} al {cursoDetalle.fechaFinFormateada}
                  </Text>
                }
              />
-          )}
+           )}
 
-          {/* Schedule */}
           {cursoDetalle.horario && (
             <ListUi.Item
               icon={"clock-outline"}
@@ -124,7 +149,6 @@ export default function VerCurso({ route }) {
             />
           )}
 
-          {/* Modality */}
           {cursoDetalle.modalidad && (
             <ListUi.Item
               icon={cursoDetalle.modalidad?.toLowerCase() === 'presencial' ? 'map-marker' : 'laptop'} // Dynamic icon based on modality
@@ -169,13 +193,26 @@ export default function VerCurso({ route }) {
           )}
 
           {cursoDetalle.contacto && ( 
-            <ListUi.Item
-              icon={"phone-message"} // Generic icon for contact
-              color={"#F39C12"}
-              title={"Contacto"}
-              subtitle={<Text style={styles.subtitleText}>{cursoDetalle.contacto}</Text>}
-            />
+            <View>
+              <Pressable onPress={handleWhatsApp}>
+                <ListUi.Item
+                  icon={"whatsapp"}
+                  color={"green"}
+                  title={"Contacto WhatsApp"}
+                  subtitle={<Text style={[styles.subtitleText, styles.linkText]}>{cursoDetalle.contacto}</Text>}
+                />
+              </Pressable>
+              <Pressable onPress={handleCall}>
+                <ListUi.Item
+                  icon={"phone"}
+                  color={"blue"}
+                  title={"Contacto Teléfono"}
+                  subtitle={<Text style={[styles.subtitleText, styles.linkText]}>{cursoDetalle.contacto}</Text>}
+                />
+              </Pressable>
+            </View>
           )}
+
         </ListUi.Parent>
       </ViewUi.Scroll.Parent>
     </SafeAreaView>

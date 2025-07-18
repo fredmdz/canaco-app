@@ -14,7 +14,7 @@ export default function NavigationOpciones() {
       <Stack.Screen
         name={routes.OPCIONES.VER_OPCIONES}
         component={VerOpciones}
-        options={{ title: "Opciones de la app" }} // Aquí el título del header
+        options={{ title: "Opciones de la app" }} 
       />
     </Stack.Navigator>
   );

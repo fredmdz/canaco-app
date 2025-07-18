@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { View, FlatList, StyleSheet, ActivityIndicator, Text } from "react-native";
 import EmpresaCard from "./components/EmpresaCard";
-import { servicesFirebase } from "../../services/"; // Asegúrate de que esta ruta sea correcta
+import { servicesFirebase } from "../../services/"; 
 
 export default function Menu({ navigation }) {
   const [state, setState] = useState({
@@ -16,7 +16,7 @@ export default function Menu({ navigation }) {
       try {
         const items = await servicesFirebase.getAll("empresas");
 
-        // --- INICIO DE CÓDIGO DE DEPURACIÓN AÑADIDO ---
+        // depuración-
         console.log("--- DEBUG: Estado de carga de empresas ---");
         console.log("Datos obtenidos de Firebase:", items);
         console.log("Número de empresas obtenidas:", items ? items.length : 0);
@@ -24,7 +24,7 @@ export default function Menu({ navigation }) {
           console.log("Primer empresa obtenida (para revisar estructura):", items[0]);
         }
         console.log("--- FIN DEBUG ---");
-        // --- FIN DE CÓDIGO DE DEPURACIÓN AÑADIDO ---
+      
 
         setState({
           empresas: items.sort((a, b) => a.nombre.localeCompare(b.nombre)),
@@ -32,7 +32,7 @@ export default function Menu({ navigation }) {
           error: null,
         });
       } catch (err) {
-        console.error("Error al cargar empresas:", err); // Muestra el error completo en la consola
+        console.error("Error al cargar empresas:", err);
         setState((prev) => ({
           ...prev,
           loading: false,

@@ -53,7 +53,8 @@
           "photosPermission": "Permitir acceder a tu galería para subir fotos de tus mascotas o de tu carnet",
           "cameraPermission": "Permitir acceder a tu cámara para tomar y subir fotos de tus mascotas o de tu carnet"
         }
-      ]
+      ],
+      "expo-notifications"
     ],
     "extra": {
       "eas": {

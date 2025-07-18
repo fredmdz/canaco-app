@@ -10,7 +10,7 @@ import NavigationContactos from "./modules/NavigationContactos";
 import NavigationOpciones from "./modules/NavigationOpciones";
 import NavigationEmpresas from "./modules/NavigationEmpresas";
 import NavigationOfertas from "./modules/NavigationOfertas";
-import NavigationRedes from "./modules/NavigationRedes"; // Importación del Stack Navigator de Redes
+import NavigationRedes from "./modules/NavigationRedes"; 
 
 import { routes } from "../routes";
 import { optionsScreen } from "./constants/optionsScreen";
@@ -54,13 +54,12 @@ export default function NavigationDrawer() {
         options={{
           headerShown: false,
           drawerLabel: () => <ItemMenuText text={"Cursos"} />,
-          drawerIcon: ({ color, size }) => ( // <-- ¡CORREGIDO AQUÍ: era 'draweREDESrIcon' y ahora es 'drawerIcon'!
+          drawerIcon: ({ color, size }) => ( 
             <Icon name="book-open" size={size} color={color} />
           ),
         }}
       />
 
-      {/* PANTALLA DE OFERTAS / PROMOCIONES */}
       <Drawer.Screen
         name={routes.DRAWER.OFERTAS}
         component={NavigationOfertas}
@@ -72,10 +71,20 @@ export default function NavigationDrawer() {
           ),
         }}
       />
-
-      {/* PANTALLA DE REDES SOCIALES (AHORA APUNTA AL STACK NAVIGATOR) */}
       <Drawer.Screen
-        name={routes.DRAWER.REDES} // <-- Asegúrate que routes.DRAWER.REDES exista en tu routes.js
+        name={routes.DRAWER.CONTACTOS}
+        component={NavigationContactos}
+        options={{
+          headerShown: false,
+          drawerLabel: () => <ItemMenuText text={"Directorio"} />,
+          drawerIcon: ({ color, size }) => (
+            <Icon name="phone" size={size} color={color} />
+          ),
+        }}
+      />
+      
+      <Drawer.Screen
+        name={routes.DRAWER.REDES} 
         component={NavigationRedes}
         options={{
           title: "Redes sociales",
@@ -84,18 +93,6 @@ export default function NavigationDrawer() {
             <Icon name="share-variant" size={size} color={color} />
           ),
           headerShown: false,
-        }}
-      />
-
-      <Drawer.Screen
-        name={routes.DRAWER.CONTACTOS}
-        component={NavigationContactos}
-        options={{
-          headerShown: false,
-          drawerLabel: () => <ItemMenuText text={"Contáctanos"} />,
-          drawerIcon: ({ color, size }) => (
-            <Icon name="phone" size={size} color={color} />
-          ),
         }}
       />
 
