@@ -84,7 +84,7 @@ export default function ListaOfertas({ navigation }) {
     <View style={styles.container}> 
       <ViewUi.Child>
         <Searchbar
-          placeholder="Busca por nombre o dirección"
+          placeholder="Buscar ofertas"
           onChangeText={handleSearchText}
           value={search}
           style={styles.searchbar}

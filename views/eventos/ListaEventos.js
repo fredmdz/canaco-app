@@ -120,7 +120,7 @@ export default function ListaEventos({ navigation }) {
     <View style={{ flex: 1 }}>
       <ViewUi.Child>
         <Searchbar
-          placeholder="Busca evento o ciudad de interés"
+          placeholder="Busca eventos de interés"
           onChangeText={(text) => searchText(text)}
           value={search}
           style={styles.searchbar}
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   contentContainerStyle: {
-    paddingBottom: 20, // Adjusted paddingBottom as banner is removed
+    paddingBottom: 20, 
     paddingHorizontal: 10,
   },
   item: {
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     overflow: "hidden",
   },
-  // Removed banner styles as the component is no longer present
+
   // banner: {
   //   position: "absolute",
   //   bottom: 0,

@@ -4,28 +4,21 @@ import { Text } from "react-native-paper";
 import ImageViewer from "react-native-image-zoom-viewer";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
-export default function ListHeader({ image, title, subtitle }) {
+export default function ListHeader({ image, title, subtitle, titleStyle, subtitleStyle }) {
   const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <View style={styles.header}>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subTitle}>{subtitle}</Text>
+      <Text style={[styles.title, titleStyle]}>{title}</Text>
+      {subtitle ? <Text style={[styles.subTitle, subtitleStyle]}>{subtitle}</Text> : null}
       <Pressable onPress={() => setModalVisible(true)}>
         <Image
           source={{ uri: image }}
-          style={{
-            width: 220,
-            height: 220,
-            justifyContent: "center",
-            alignItems: "center",
-            borderRadius: 10,
-            resizeMode: "cover",
-          }}
+          style={styles.image}
         />
       </Pressable>
 
-      {/*Modal para mostrar la imagen de manera más detallada*/}
+      {/* Modal para mostrar la imagen de manera más detallada */}
       <Modal
         animationType="slide"
         transparent={true}
@@ -54,11 +47,10 @@ const styles = StyleSheet.create({
   subTitle: { fontSize: 20, fontWeight: "bold", marginBottom: 10, color: "#666" },
   backButton: {
     position: "absolute",
-    top: 50,
+    top: Platform.OS === "ios" ? 40 : 30,
     left: 15,
     zIndex: 1,
     padding: 8,
-    top: Platform.OS === "ios" ? 40 : 30,
   },
   modal: {
     flex: 1,

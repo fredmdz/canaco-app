@@ -1,177 +1,241 @@
 import { useState, useEffect } from "react";
-import { Pressable, Linking, Text, StyleSheet, Platform, SafeAreaView, Image, View } from "react-native"; // Agregado Image y View
+import { Pressable, Linking, Text, StyleSheet, Modal, ScrollView, TouchableOpacity, Dimensions, Platform } from "react-native";
 import dayjs from "dayjs";
 import 'dayjs/locale/es';
 dayjs.locale('es');
 
 import { View as ViewUi, List as ListUi } from "../../components/ui";
 
+const { width, height } = Dimensions.get('window');
+
 export default function VerOferta({ route }) {
   const { dataOferta } = route.params;
 
-  const [oferta, setOferta] = useState({});
+  const [ofertaDetalle, setOfertaDetalle] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     if (dataOferta) {
       const processedOferta = {
         ...dataOferta,
-        images: dataOferta.images || 'https://via.placeholder.com/400?text=Sin+Imagen',
-
+        images: dataOferta.images || 'https://via.placeholder.com/400x300?text=Sin+Imagen',
         vigenciaFecha: dataOferta.celular && dayjs(dataOferta.celular, 'DD/MM/YYYY', true).isValid()
-            ? dayjs(dataOferta.celular, 'DD/MM/YYYY').format('DD MMMM YYYY')
-            : (dataOferta.celular || 'No especificada'),
-        
+          ? dayjs(dataOferta.celular, 'DD/MM/YYYY').format('DD MMMM YYYY')
+          : (dataOferta.celular || 'No especificada'),
         nombrePromocion: dataOferta.name || 'Promoción sin nombre',
         descuento: dataOferta.apellido || 'No especificado',
         descripcion: dataOferta.especialidad || 'No hay descripción disponible.',
         whatsappNum: dataOferta.wat || dataOferta.celular,
       };
-      setOferta(processedOferta);
+      setOfertaDetalle(processedOferta);
     }
   }, [dataOferta]);
 
-  // Función para abrir el mapa con la ubicación de la oferta
   const handleOpenMap = () => {
-    const { lat, lng, direccion } = oferta;
+    const { lat, lng, direccion } = ofertaDetalle;
     if (lat && lng) {
       const mapUrl = Platform.select({
         ios: `maps:0,0?q=${lat},${lng}`,
         android: `geo:0,0?q=${lat},${lng}`,
         default: `https://www.google.es/maps?q=${lat},${lng}`,
       });
-      Linking.openURL(mapUrl).catch(err => console.error("No se pudo abrir el mapa con coordenadas:", err));
+      Linking.openURL(mapUrl).catch(() => alert('No se pudo abrir la app de mapas.'));
     } else if (direccion) {
       const encodedAddress = encodeURIComponent(direccion);
       const mapUrl = Platform.select({
-          ios: `maps:0,0?q=${encodedAddress}`,
-          android: `geo:0,0?q=${encodedAddress}`,
-          default: `https://www.google.es/maps?q=${encodedAddress}`,
+        ios: `maps:0,0?q=${encodedAddress}`,
+        android: `geo:0,0?q=${encodedAddress}`,
+        default: `https://www.google.es/maps?q=${encodedAddress}`,
       });
-      Linking.openURL(mapUrl).catch(err => console.error("No se pudo abrir el mapa con dirección:", err));
+      Linking.openURL(mapUrl).catch(() => alert('No se pudo abrir la app de mapas.'));
     } else {
-      alert("Ubicación no disponible para esta promoción.");
+      alert('Ubicación no disponible.');
     }
   };
 
-  if (!oferta || Object.keys(oferta).length === 0) {
+  if (!ofertaDetalle || Object.keys(ofertaDetalle).length === 0) {
     return (
-      <SafeAreaView style={styles.container}>
-        <ViewUi.Scroll.Parent>
-          <Text style={styles.loadingText}>Cargando detalles de la promoción...</Text>
-        </ViewUi.Scroll.Parent>
-      </SafeAreaView>
+      <ViewUi.Scroll.Parent style={styles.container}>
+        <Text style={styles.loadingText}>Cargando detalles de la oferta...</Text>
+      </ViewUi.Scroll.Parent>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ViewUi.Scroll.Parent>
-        <View style={styles.headerContainer}>
-          <Text style={styles.headerTitle}>
-            {oferta.nombrePromocion}
-          </Text>
-          <Image
-            source={{ uri: oferta.images }} s
-            style={styles.headerImage}
-            resizeMode="contain" //
+    <ViewUi.Scroll.Parent style={styles.container}>
+      <Pressable onPress={() => setModalVisible(true)} style={styles.headerContainer}>
+        <ListUi.Header
+          image={ofertaDetalle.images}
+          title={ofertaDetalle.nombrePromocion}
+          titleStyle={styles.titleText}
+        />
+      </Pressable>
+
+      <ListUi.Parent style={styles.listContainer}>
+        {ofertaDetalle.descripcion && (
+          <ListUi.Item
+            icon={"tag-text-outline"}
+            color={"#314c95"}
+            title={<Text style={styles.sectionTitle}>Descripción de la oferta</Text>}
+            subtitle={<Text style={styles.subtitleBlack}>{ofertaDetalle.descripcion}</Text>}
           />
-        </View>
+        )}
 
-        <ViewUi.Child>
-          <ListUi.Parent>
-            {oferta.descripcion && (
-              <ListUi.Item
-                icon={"tag-text-outline"}
-                color={"#B26217"}
-                title={"Descripción de la promoción"}
-                subtitle={<Text style={styles.subtitleText}>{oferta.descripcion}</Text>}
-              />
-            )}
+        {ofertaDetalle.descuento && (
+          <ListUi.Item
+            icon={"percent"}
+            color={"#314c95"}
+            title={<Text style={styles.sectionTitle}>Descuento / Beneficio</Text>}
+            subtitle={<Text style={styles.subtitleBlack}>{ofertaDetalle.descuento}</Text>}
+          />
+        )}
 
-            {oferta.descuento && (
-              <ListUi.Item
-                icon={"percent"}
-                color={"#FF7F37"}
-                title={"Descuento / Beneficio"}
-                subtitle={<Text style={styles.subtitleText}>{oferta.descuento}</Text>}
-              />
-            )}
+        {ofertaDetalle.vigenciaFecha && (
+          <ListUi.Item
+            icon={"calendar-range"}
+            color={"#314c95"}
+            title={<Text style={styles.sectionTitle}>Vigencia</Text>}
+            subtitle={<Text style={styles.subtitleBlack}>{ofertaDetalle.vigenciaFecha}</Text>}
+          />
+        )}
 
-            {oferta.vigenciaFecha && (
-              <ListUi.Item
-                icon={"calendar-range"}
-                color={"#FF7F37"}
-                title={"Vigencia"}
-                subtitle={<Text style={styles.subtitleText}>{oferta.vigenciaFecha}</Text>}
-              />
-            )}
+        {ofertaDetalle.telefono && (
+          <Pressable onPress={() => Linking.openURL(`tel:${ofertaDetalle.telefono}`)}>
+            <ListUi.Item
+              icon={"phone"}
+              color={"#314c95"}
+              title={<Text style={styles.sectionTitle}>Teléfono</Text>}
+              subtitle={<Text style={styles.linkText}>{ofertaDetalle.telefono}</Text>}
+            />
+          </Pressable>
+        )}
 
-            {oferta.telefono && (
-              <Pressable onPress={() => Linking.openURL(`tel:${oferta.telefono}`).catch(err => console.error("No se pudo llamar:", err))}>
-                <ListUi.Item
-                  icon={"phone"}
-                  color={"blue"}
-                  title={"Número de Teléfono"}
-                  subtitle={<Text style={[styles.subtitleText, styles.linkText]}>{oferta.telefono}</Text>}
-                />
-              </Pressable>
-            )}
+        {ofertaDetalle.whatsappNum && (
+          <Pressable onPress={() => Linking.openURL(`http://api.whatsapp.com/send?phone=52${ofertaDetalle.whatsappNum}`)}>
+            <ListUi.Item
+              icon={"whatsapp"}
+              color={"#314c95"}
+              title={<Text style={styles.sectionTitle}>WhatsApp</Text>}
+              subtitle={<Text style={styles.linkText}>{ofertaDetalle.whatsappNum}</Text>}
+            />
+          </Pressable>
+        )}
 
-            {oferta.whatsappNum && (
-              <Pressable
-                onPress={() => Linking.openURL("http://api.whatsapp.com/send?phone=52" + oferta.whatsappNum).catch(err => console.error("No se pudo abrir WhatsApp:", err))}
-              >
-                <ListUi.Item
-                  icon={"whatsapp"}
-                  color={"green"}
-                  title={"Número de WhatsApp"}
-                  subtitle={<Text style={[styles.subtitleText, styles.linkText]}>{oferta.whatsappNum}</Text>}
-                />
-              </Pressable>
-            )}
-          </ListUi.Parent>
-        </ViewUi.Child>
-      </ViewUi.Scroll.Parent>
-    </SafeAreaView>
+        {(ofertaDetalle.lat && ofertaDetalle.lng || ofertaDetalle.direccion) && (
+          <Pressable onPress={handleOpenMap}>
+            <ListUi.Item
+              icon={"map-marker"}
+              color={"#314c95"}
+              title={<Text style={styles.sectionTitle}>Ubicación</Text>}
+              subtitle={<Text style={styles.linkText}>{ofertaDetalle.direccion || 'Ver en el mapa'}</Text>}
+            />
+          </Pressable>
+        )}
+      </ListUi.Parent>
+
+      <Modal
+        visible={modalVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalBackground}
+          activeOpacity={1}
+          onPressOut={() => setModalVisible(false)}
+        >
+          <ScrollView
+            style={styles.modalScrollView}
+            contentContainerStyle={styles.modalContentContainer}
+            maximumZoomScale={5}
+            minimumZoomScale={1}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            pinchGestureEnabled={true}
+            scrollEnabled={true}
+            contentInsetAdjustmentBehavior="automatic"
+          >
+            <ListUi.Header
+              image={ofertaDetalle.images}
+              title={ofertaDetalle.nombrePromocion}
+              titleStyle={styles.titleText}
+            />
+          </ScrollView>
+        </TouchableOpacity>
+      </Modal>
+    </ViewUi.Scroll.Parent>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: "#f0f4f7",
   },
   headerContainer: {
     alignItems: "center",
-    marginTop: 20,
-    marginBottom: 20, 
+    // ❌ Quitamos el marginTop para pegar al header
   },
-  headerTitle: {
+  titleText: {
     fontSize: 24,
     fontWeight: "bold",
     color: "#314c95",
-    marginBottom: 10, 
-    textAlign: 'center', 
-    paddingHorizontal: 20, 
+    marginBottom: 10,
+    textAlign: "center",
+    paddingHorizontal: 10,
   },
-  headerImage: {
-    width: '90%', // O un valor fijo como 350
-    height: 200, // Altura fija
-    resizeMode: "contain",
+  listContainer: {
+    marginTop: 10,   // 👈 Controlas el espacio desde aquí (igual que VerEvento)
+    marginBottom: 20,
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#e0e6ec",
+    padding: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 6,
+    marginHorizontal: 25,
   },
-  subtitleText: {
-    fontSize: 15,
-    color: '#333',
-    lineHeight: 22,
+  sectionTitle: {
+    fontSize: 22,
+    fontWeight: "700",
+    color: "#34495e",
+    marginBottom: 15,
+    paddingBottom: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: "#314c95",
+  },
+  subtitleBlack: {
+    fontSize: 17,
+    color: "black",
   },
   linkText: {
-    color: '#007bff',
-    textDecorationLine: 'underline',
+    fontSize: 17,
+    color: "#314c95",
+    textDecorationLine: "underline",
+  },
+  modalBackground: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.85)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalScrollView: {
+    flex: 1,
+    width: width,
+    height: height,
+  },
+  modalContentContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexGrow: 1,
   },
   loadingText: {
     fontSize: 18,
-    color: '#333',
-    textAlign: 'center',
+    color: "#4a6572",
+    textAlign: "center",
     marginTop: 50,
-  }
+  },
 });

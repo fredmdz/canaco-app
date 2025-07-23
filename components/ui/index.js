@@ -1,4 +1,3 @@
-// scroll
 import ViewScrollParent from "./view/scroll/ViewScrollParent";
 import ViewScrollParentFull from "./view/scroll/ViewScrollParentFull";
 // parent

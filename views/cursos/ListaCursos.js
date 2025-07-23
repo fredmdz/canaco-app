@@ -18,13 +18,12 @@ export default function ListaCursos({ navigation }) {
   }, []);
 
   async function getAll() {
-  const items = await servicesFirebase.getAll("cursos");
+    const items = await servicesFirebase.getAll("cursos");
 
-  setListCursosStore(items);
-  setListCursos(items);
-  setLoaded(true);
+    setListCursosStore(items);
+    setListCursos(items);
+    setLoaded(true);
   }
-
 
   function searchText(searchInput) {
     setSearch(searchInput);
@@ -52,10 +51,12 @@ export default function ListaCursos({ navigation }) {
   function render(item, navigation) {
     return (
       <Pressable
-        onPress={() => navigation.navigate(routes.DRAWER.CURSOS, {
-          screen: routes.CURSOS.VER_CURSO,
-          params: { dataCursos: item },
-        })}
+        onPress={() =>
+          navigation.navigate(routes.DRAWER.CURSOS, {
+            screen: routes.CURSOS.VER_CURSO,
+            params: { dataCursos: item },
+          })
+        }
       >
         <List.Item
           style={styles.item}
@@ -108,15 +109,6 @@ export default function ListaCursos({ navigation }) {
           keyExtractor={item => item.id || item.nombre}
         />
       )}
-
-      <Pressable
-        onPress={() => {
-          Linking.openURL("https://mashuezus.com/apppreguntas/eventos");
-        }}
-        style={styles.banner}
-      >
-        {/* Placeholder for banner */}
-      </Pressable>
     </View>
   );
 }
@@ -160,11 +152,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#999',
     fontStyle: 'italic',
-  },
-  banner: {
-    position: "absolute",
-    bottom: 0,
-    width: "100%",
-    height: 80,
   },
 });

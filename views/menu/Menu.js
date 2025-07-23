@@ -1,31 +1,29 @@
 // views/menu/Menu.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useLayoutEffect } from "react";
 import { View, FlatList, StyleSheet, ActivityIndicator, Text } from "react-native";
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import EmpresaCard from "./components/EmpresaCard";
-import { servicesFirebase } from "../../services/"; 
+import { servicesFirebase } from "../../services/";
 
 export default function Menu({ navigation }) {
+  const insets = useSafeAreaInsets(); // ✅ Obtienes el espacio del notch y barra de estado
+
   const [state, setState] = useState({
     empresas: [],
     loading: true,
     error: null,
   });
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      statusBarHeight: insets.top, // ✅ Le pasas el insets.top al Appbar.Header desde options
+    });
+  }, [navigation, insets]);
+
   useEffect(() => {
     const getEmpresas = async () => {
       try {
         const items = await servicesFirebase.getAll("empresas");
-
-        // depuración-
-        console.log("--- DEBUG: Estado de carga de empresas ---");
-        console.log("Datos obtenidos de Firebase:", items);
-        console.log("Número de empresas obtenidas:", items ? items.length : 0);
-        if (items && items.length > 0) {
-          console.log("Primer empresa obtenida (para revisar estructura):", items[0]);
-        }
-        console.log("--- FIN DEBUG ---");
-      
-
         setState({
           empresas: items.sort((a, b) => a.nombre.localeCompare(b.nombre)),
           loading: false,
@@ -74,7 +72,7 @@ export default function Menu({ navigation }) {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         numColumns={2}
-        contentContainerStyle={styles.list} 
+        contentContainerStyle={styles.list}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Text style={styles.emptyText}>No hay empresas disponibles</Text>
@@ -109,16 +107,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   list: {
-    paddingHorizontal: 10, 
+    paddingHorizontal: 10,
     paddingVertical: 10,
-   
   },
   emptyContainer: {
-    flex: 1, 
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    minHeight: 200, 
+    minHeight: 200,
   },
   emptyText: {
     fontSize: 16,
