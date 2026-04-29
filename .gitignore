@@ -10,5 +10,23 @@ npm-debug.*
 *.orig.*
 web-build/
 
-# macOS
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Firebase config from environment
+config/firebaseConfig.js
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 .DS_Store
+.vscode/
+.idea/
+android/.gradle/
+ios/Pods/
+.expo/
+.expo-shared/
+build/
+dist/

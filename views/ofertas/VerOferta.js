@@ -131,6 +131,13 @@ export default function VerOferta({ route }) {
             />
           </Pressable>
         )}
+
+        {/* --- Leyenda corregida con negritas --- */}
+        <Text style={styles.promoLegend}>
+          *Promoción válida al presentar tu <Text style={{ fontWeight: 'bold' }}>INE</Text> y
+          los <Text style={{ fontWeight: 'bold' }}>Datos Personales en el apartado de Opciones</Text>.
+        </Text>
+
       </ListUi.Parent>
 
       <Modal
@@ -174,7 +181,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     alignItems: "center",
-    // ❌ Quitamos el marginTop para pegar al header
   },
   titleText: {
     fontSize: 24,
@@ -185,7 +191,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   listContainer: {
-    marginTop: 10,   // 👈 Controlas el espacio desde aquí (igual que VerEvento)
+    marginTop: 10,
     marginBottom: 20,
     backgroundColor: "#fff",
     borderWidth: 1,
@@ -238,4 +244,12 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 50,
   },
+  promoLegend: {
+    fontSize: 14,
+    color: '#666',
+    textAlign: 'center',
+    marginTop: 20,
+    fontStyle: 'italic',
+    paddingHorizontal: 10,
+  }
 });

@@ -9,14 +9,20 @@ const routes = {
   },
 
   DRAWER: {
+    INICIO: "drawerInicio", 
     OPCIONES: "drawerOpciones",
     EVENTOS: "drawerEventos",
-    // BENEFICIOS: "drawerBeneficios", 
     CURSOS: "drawerCursos",
     CONTACTOS: "drawerContactos",
     PREGUNTAS: "drawerPreguntas",
     OFERTAS: "drawerOfertas", 
     REDES: "drawerRedes", 
+    AFILIACION: "drawerAfiliacion", 
+  },
+
+  INICIO: {
+    INDEX: "inicioIndex", 
+    DETALLE_NOTICIA: "detalleNoticia", 
   },
 
   EVENTOS: {

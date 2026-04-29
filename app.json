@@ -54,7 +54,9 @@
           "cameraPermission": "Permitir acceder a tu cámara para tomar y subir fotos de tus mascotas o de tu carnet"
         }
       ],
-      "expo-notifications"
+      "expo-notifications",
+      "expo-barcode-scanner",
+      "@react-native-community/datetimepicker"
     ],
     "extra": {
       "eas": {
