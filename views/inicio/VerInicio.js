@@ -219,12 +219,9 @@ const VerInicio = ({ navigation }) => {
                 key={item.id}
                 style={styles.horizontalCard}
                 onPress={() => navigation.navigate(
-                    isEvento ? routes.DRAWER.EVENTOS : routes.DRAWER.CURSOS,
-                    {
-                        screen: isEvento ? routes.EVENTOS.VER_EVENTO : routes.CURSOS.VER_CURSO,
-                        params: { 
-                            [isEvento ? 'dataEventos' : 'dataCursos']: item 
-                        }
+                    isEvento ? 'homeVerEvento' : 'homeVerCurso',
+                    { 
+                        [isEvento ? 'dataEventos' : 'dataCursos']: item 
                     }
                 )}
             >
