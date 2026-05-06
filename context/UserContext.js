@@ -67,17 +67,22 @@ export const UserProvider = ({ children }) => {
                 return;
             }
 
-            const affiliatesData = await servicesFirebase.getAll("afiliados");
             let isUserAffiliate = false;
             let affiliateDetails = null;
 
-            if (userEmail && affiliatesData && affiliatesData.length > 0) {
-                const matchingAffiliate = affiliatesData.find(
-                    (affiliate) => affiliate.correo === userEmail && affiliate.estado === "aceptado"
-                );
-                if (matchingAffiliate) {
-                    isUserAffiliate = true;
-                    affiliateDetails = matchingAffiliate;
+            // SOLO intentar cargar datos de afiliados si el correo está verificado
+            // de lo contrario, Firebase dará error de permisos por nuestras nuevas reglas
+            if (currentUser.emailVerified) {
+                const affiliatesData = await servicesFirebase.getAll("afiliados");
+
+                if (userEmail && affiliatesData && affiliatesData.length > 0) {
+                    const matchingAffiliate = affiliatesData.find(
+                        (affiliate) => affiliate.correo === userEmail && affiliate.estado === "aceptado"
+                    );
+                    if (matchingAffiliate) {
+                        isUserAffiliate = true;
+                        affiliateDetails = matchingAffiliate;
+                    }
                 }
             }
 
@@ -107,7 +112,7 @@ export const UserProvider = ({ children }) => {
                 }
                 updatedUserData.fechaVencimiento = calculatedFechaVencimiento;
             } else {
-                 // Si no es afiliado o no hay detalles de afiliado, no hay fecha de vencimiento
+                 // Si no es verificado, no es afiliado o no hay detalles, no hay fecha de vencimiento
                  updatedUserData.fechaVencimiento = null;
             }
 

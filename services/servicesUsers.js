@@ -3,6 +3,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
   sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "./servicesFirebase";
@@ -80,6 +81,21 @@ const servicesUsers = {
       response = null;
     }
     return response;
+  },
+
+  // Enviar correo de verificación
+  sendVerification: async function () {
+    try {
+      const user = auth.currentUser;
+      if (user) {
+        await sendEmailVerification(user);
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error(`Error en: servicesUsers.sendVerification => ${error}`);
+      return false;
+    }
   },
 };
 
