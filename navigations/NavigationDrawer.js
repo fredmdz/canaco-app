@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   itemMenuText: {
     color: "#314c95",
     fontSize: 16,
-    marginLeft: -18,
+    marginLeft: 0,
   },
   logoContainer: {
     display: "flex",

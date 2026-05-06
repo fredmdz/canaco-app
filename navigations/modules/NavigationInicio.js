@@ -33,7 +33,7 @@ export default function NavigationInicio() {
               name="menu"
               size={30}
               color="#fff"
-              style={{ marginLeft: 0 }}
+              style={{ marginLeft: 5, marginRight: 15 }}
               onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             />
           ),
@@ -53,4 +53,4 @@ export default function NavigationInicio() {
   );
 }
 
-
+
