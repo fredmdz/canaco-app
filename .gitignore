@@ -30,3 +30,4 @@ ios/Pods/
 .expo-shared/
 build/
 dist/
+.yarn
