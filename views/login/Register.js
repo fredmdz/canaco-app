@@ -39,7 +39,12 @@ export default function Register() {
       return;
     }
 
-    Alert.alert("", "¡Bienvenido a CANACO SERVYTUR!");
+    // Enviar correo de verificación inmediatamente
+    await servicesUsers.sendVerification();
+
+    // No mostramos alerta de bienvenida aquí, ya que el usuario 
+    // será redirigido a la pantalla naranja de verificación.
+    console.log("Registro exitoso, correo de verificación enviado.");
   }
 
   function testValues(dataValues) {

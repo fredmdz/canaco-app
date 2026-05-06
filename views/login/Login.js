@@ -42,7 +42,13 @@ export default function Login() {
       return;
     }
 
-    Alert.alert("", "¡Bienvenido A CANACO SERVYTUR!");
+    if (response.emailVerified) {
+      Alert.alert("", "¡Bienvenido A CANACO SERVYTUR!");
+    } else {
+      // No mostramos bienvenida si no está verificado,
+      // la pantalla de VerifyEmail se encargará de informarle.
+      console.log("Usuario logueado pero no verificado.");
+    }
   }
 
   function testValues(dataValues) {
