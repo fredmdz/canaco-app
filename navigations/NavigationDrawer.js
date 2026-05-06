@@ -6,7 +6,7 @@ import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext'; 
 
 // --- Importación de vistas ---
-import VerInicio from "../views/inicio/VerInicio";
+import NavigationInicio from "./modules/NavigationInicio";
 import VerAfiliacion from "../views/afiliacion/VerAfiliacion";
 
 // --- Stack Navigators (módulos) ---
@@ -51,18 +51,15 @@ export default function NavigationDrawer() {
     >
       <Drawer.Screen
         name={routes.DRAWER.INICIO}
-        component={VerInicio}
+        component={NavigationInicio}
         options={{
           title: "CANACO SERVYTUR",
           drawerLabel: () => <ItemMenuText text={"Inicio"} />,
-          headerShown: true,
+          headerShown: false,
+          unmountOnBlur: true,
           drawerIcon: ({ color, size }) => (
             <Icon name="home" size={size} color={color} />
           ),
-          headerTitleStyle: {
-            fontSize: 22,
-            fontWeight: 'normal',
-          },
         }}
       />
 
@@ -75,6 +72,7 @@ export default function NavigationDrawer() {
             title: "Empresas",
             drawerLabel: () => <ItemMenuText text={"Empresas"} />,
             headerShown: false,
+            unmountOnBlur: true,
             drawerIcon: ({ color, size }) => (
               <Icon name="domain" size={size} color={color} />
             ),
@@ -87,6 +85,7 @@ export default function NavigationDrawer() {
         component={NavigationEventos}
         options={{
           headerShown: false,
+          unmountOnBlur: true,
           drawerLabel: () => <ItemMenuText text={"Eventos"} />,
           drawerIcon: ({ color, size }) => (
             <Icon name="calendar-month" size={size} color={color} />
@@ -99,6 +98,7 @@ export default function NavigationDrawer() {
         component={NavigationCursos}
         options={{
           headerShown: false,
+          unmountOnBlur: true,
           drawerLabel: () => <ItemMenuText text={"Cursos"} />,
           drawerIcon: ({ color, size }) => (
             <Icon name="book-open" size={size} color={color} />
@@ -113,6 +113,7 @@ export default function NavigationDrawer() {
           component={NavigationOfertas}
           options={{
             headerShown: false,
+            unmountOnBlur: true,
             drawerLabel: () => <ItemMenuText text={"Promociones"} />,
             drawerIcon: ({ color, size }) => (
               <Icon name="tag-multiple" size={size} color={color} />
@@ -126,6 +127,7 @@ export default function NavigationDrawer() {
         component={NavigationContactos}
         options={{
           headerShown: false,
+          unmountOnBlur: true,
           drawerLabel: () => <ItemMenuText text={"Directorio"} />,
           drawerIcon: ({ color, size }) => (
             <Icon name="phone" size={size} color={color} />
@@ -143,6 +145,7 @@ export default function NavigationDrawer() {
             <Icon name="share-variant" size={size} color={color} />
           ),
           headerShown: false,
+          unmountOnBlur: true,
         }}
       />
 
@@ -183,6 +186,7 @@ export default function NavigationDrawer() {
         component={NavigationOpciones}
         options={{
           headerShown: false,
+          unmountOnBlur: true,
           drawerLabel: () => <ItemMenuText text={"Opciones"} />,
           drawerIcon: ({ color, size }) => (
             <Icon name="cog" size={size} color={color} />

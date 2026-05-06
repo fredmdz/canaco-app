@@ -1,11 +1,15 @@
 // navigations/modules/NavigationInicio.js
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { DrawerActions } from '@react-navigation/native';
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import VerInicio from '../../views/inicio/VerInicio'; 
+import VerEvento from '../../views/eventos/VerEvento';
+import VerCurso from '../../views/cursos/VerCurso';
 import { routes } from '../../routes'; 
 import { optionsScreen } from '../constants/optionsScreen'; 
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function NavigationInicio() {
   return (
@@ -16,13 +20,37 @@ export default function NavigationInicio() {
       <Stack.Screen
         name={routes.INICIO.INDEX} 
         component={VerInicio}
-        options={{ headerShown: false }} 
+        options={({ navigation }) => ({
+          title: 'CANACO SERVYTUR',
+          headerShown: true,
+          headerTitleAlign: 'left',
+          headerTitleStyle: {
+            fontSize: 22,
+            fontWeight: 'normal',
+          },
+          headerLeft: () => (
+            <Icon
+              name="menu"
+              size={30}
+              color="#fff"
+              style={{ marginLeft: 0 }}
+              onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+            />
+          ),
+        })}
       />
-      //<Stack.Screen
-        //name={routes.INICIO.DETALLE_NOTICIA} 
-        //component={DetalleNoticia} 
-        //options={{ title: 'Detalle de Noticia' }} 
+      <Stack.Screen
+        name="homeVerEvento"
+        component={VerEvento}
+        options={{ title: 'Información del evento' }}
+      />
+      <Stack.Screen
+        name="homeVerCurso"
+        component={VerCurso}
+        options={{ title: 'Información del curso' }}
       />
     </Stack.Navigator>
   );
 }
+
+
