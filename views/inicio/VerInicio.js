@@ -46,7 +46,7 @@ const VerInicio = ({ navigation }) => {
 
             // Procesar eventos
             const now = dayjs();
-            const eventosActivos = eventos.filter(data => {
+            const eventosActivos = (eventos || []).filter(data => {
                 const fechaInicio = data.fechaInicio?.toDate?.() ? dayjs(data.fechaInicio.toDate()) : null;
                 const fechaFin = data.fechaFin?.toDate?.() ? dayjs(data.fechaFin.toDate()) : null;
                 
@@ -66,7 +66,7 @@ const VerInicio = ({ navigation }) => {
             const relevanceWindowDays = 90;
             const pastRelevantDate = now.subtract(relevanceWindowDays, 'day');
             
-            const cursosActivos = cursos.filter(curso => {
+            const cursosActivos = (cursos || []).filter(curso => {
                 const fechaInicio = curso.fechaInicio?.toDate?.() ? dayjs(curso.fechaInicio.toDate()) : null;
                 return fechaInicio && (now.isSameOrBefore(fechaInicio, 'day') || 
                             fechaInicio.isAfter(pastRelevantDate, 'day'));

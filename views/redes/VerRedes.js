@@ -17,7 +17,7 @@ export default function VerRedes() {
   async function getAllRedes() {
     try {
       const items = await servicesFirebase.getAll("redesSociales");
-      const processedItems = items.map(item => ({
+      const processedItems = (items || []).map(item => ({
         ...item,
         imagenUrl: item.imagenUrl || 'https://via.placeholder.com/150?text=Logo',
         titulo: item.titulo || 'Red Social Desconocida',
