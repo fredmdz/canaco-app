@@ -1,4 +1,5 @@
 import "react-native-gesture-handler";
+import "react-native-reanimated";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import isBetween from "dayjs/plugin/isBetween";

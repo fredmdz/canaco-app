@@ -27,7 +27,7 @@ const servicesFirebase = {
       });
     } catch (error) {
       console.error(`Error en: servicesFirebase.getAll.${collectionName} => ${error}`);
-      items = null;
+      items = []; // Devolver array vacío en lugar de null para evitar errores de .filter()
     }
     return items;
   },
