@@ -3,12 +3,12 @@
 import LeftIcon from "../../components/icons/LeftIcon";
 
 const optionsScreen = {
-  OPTIONS_STACK: {
+  OPTIONS_STACK: ({ navigation }) => ({
     headerStyle: { backgroundColor: "#314c95" },
     headerTintColor: "#fff",
   
-    headerLeft: LeftIcon,
-  },
+    headerLeft: (props) => <LeftIcon {...props} customNavigation={navigation} />,
+  }),
 
   OPTIONS_LOGIN: {
     headerStyle: { backgroundColor: "#314c95" },
