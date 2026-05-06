@@ -1,6 +1,10 @@
 import "react-native-gesture-handler";
 import "react-native-reanimated";
+import { LogBox } from "react-native";
 import dayjs from "dayjs";
+
+LogBox.ignoreAllLogs(); // Esto oculta los logs dentro de la app (pantalla del cel) pero los mantiene en la terminal
+
 import "dayjs/locale/es";
 import isBetween from "dayjs/plugin/isBetween";
 
