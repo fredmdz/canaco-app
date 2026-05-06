@@ -22,30 +22,19 @@ export default function ListaEventos({ navigation }) {
 
   async function getAll() {
     try {
-      console.log("Intentando obtener eventos...");
       const items = await servicesFirebase.getAll("eventos");
-      console.log("Eventos obtenidos (antes de filtrar):", JSON.stringify(items, null, 2));
 
       const itemsNew = items.filter((data) => {
         const fechaInicio = data.fechaInicio && typeof data.fechaInicio.toDate === 'function' ? data.fechaInicio.toDate() : null;
         const fechaFin = data.fechaFin && typeof data.fechaFin.toDate === 'function' ? data.fechaFin.toDate() : null;
 
         if (!fechaInicio || !fechaFin) {
-          console.log(`Evento ID: ${data.id} - Fechas inválidas o ausentes. Filtrando fuera.`);
           return false;
         }
 
-        const isCurrent = helpers.isRangeDates(fechaInicio, fechaFin);
-        console.log(`--- Evento ID: ${data.id} ---`);
-        console.log(`fechaInicio (Date): ${dayjs(fechaInicio).format('YYYY-MM-DD HH:mm:ss')}`);
-        console.log(`fechaFin (Date): ${dayjs(fechaFin).format('YYYY-MM-DD HH:mm:ss')}`);
-        console.log(`Resultado de isRangeDates: ${isCurrent}`);
-        console.log("-----------------------");
-
-        return isCurrent;
+        return helpers.isRangeDates(fechaInicio, fechaFin);
       });
 
-      console.log("Eventos filtrados:", itemsNew);
       setListEventosStore(itemsNew);
       setListEventos(itemsNew);
       setLoaded(true);
