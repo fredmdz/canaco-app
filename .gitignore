@@ -31,3 +31,6 @@ ios/Pods/
 build/
 dist/
 .yarn
+
+seedData.js
+
