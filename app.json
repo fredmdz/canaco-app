@@ -33,7 +33,13 @@
         "googleMaps": {
           "apiKey": "AIzaSyALly7vAncSIWURHXk5NGMNAFJE0N6yO8M"
         }
-      }
+      },
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ]
     },
     "web": {
       "favicon": "./assets/app/favicon.png"
@@ -42,26 +48,26 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Activar los servicios de ubicación nos permite mostrarle veterinarios y mascotas cerca de su ubicación",
-          "locationAlwaysPermission": "Activar los servicios de ubicación nos permite mostrarle veterinarios y mascotas cerca de su ubicación",
-          "locationWhenInUsePermission": "Activar los servicios de ubicación nos permite mostrarle veterinarios y mascotas cerca de su ubicación"
+          "locationAlwaysAndWhenInUsePermission": "Permitir el acceso a su ubicación nos ayuda a mostrarle los comercios, servicios y eventos de la CANACO más cercanos.",
+          "locationAlwaysPermission": "Permitir el acceso a su ubicación nos ayuda a mostrarle los comercios, servicios y eventos de la CANACO más cercanos.",
+          "locationWhenInUsePermission": "Permitir el acceso a su ubicación nos ayuda a mostrarle los comercios, servicios y eventos de la CANACO más cercanos."
         }
       ],
       [
         "expo-image-picker",
         {
-          "photosPermission": "Permitir acceder a tu galería para subir fotos de tus mascotas o de tu carnet",
-          "cameraPermission": "Permitir acceder a tu cámara para tomar y subir fotos de tus mascotas o de tu carnet"
+          "photosPermission": "Permitir acceso a la galería para que pueda subir imágenes de su perfil o de su establecimiento.",
+          "cameraPermission": "Permitir acceso a la cámara para capturar fotos de perfil o de su negocio directamente."
         }
       ],
       "expo-notifications",
-      "expo-barcode-scanner",
       "@react-native-community/datetimepicker"
     ],
     "extra": {
       "eas": {
-        "projectId": "a4f09861-7435-40ce-943b-ec66bf8b0614"
+        "projectId": "9cee62b9-3b9b-48bb-bc6e-cdc7d53275b9"
       }
-    }
+    },
+    "owner": "freddmx"
   }
 }
