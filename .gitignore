@@ -15,8 +15,8 @@ web-build/
 .env.local
 .env.*.local
 
-# Firebase config from environment
-config/firebaseConfig.js
+# # Firebase config from environment
+# config/firebaseConfig.js
 
 npm-debug.log*
 yarn-debug.log*
@@ -29,8 +29,10 @@ ios/Pods/
 .expo/
 .expo-shared/
 build/
-dist/
 .yarn
 
 seedData.js
+android/
+ios/
+
 
