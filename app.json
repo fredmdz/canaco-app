@@ -62,12 +62,6 @@
       ],
       "expo-notifications",
       "@react-native-community/datetimepicker"
-    ],
-    "extra": {
-      "eas": {
-        "projectId": "9cee62b9-3b9b-48bb-bc6e-cdc7d53275b9"
-      }
-    },
-    "owner": "freddmx"
+    ]
   }
 }
